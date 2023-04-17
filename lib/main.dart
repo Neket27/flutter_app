@@ -1,18 +1,12 @@
-import 'dart:convert';
-import 'dart:js';
-
 import 'package:flutter/material.dart';
-import 'package:project_app/home/carousel/carouselRecentPeople.dart';
-import 'package:project_app/models/index.dart';
+
 import 'home/home.dart';
 
 void main() {
   runApp(MaterialApp(
     home: Home(),
   ));
-
 }
-
 
 class Carroussel extends StatefulWidget {
   @override
@@ -82,5 +76,3 @@ class _CarrousselState extends State<Carroussel> {
     );
   }
 }
-
-

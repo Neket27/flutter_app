@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project_app/home/carousel/carouselRecentPeople.dart';
 import 'package:project_app/people/messageWithPeoples.dart';
 import 'package:project_app/menuLeft/panelMenu.dart';
+import 'package:project_app/models/user.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
 
 class Home extends StatefulWidget {
   const Home({Key? key}) :super(key: key);
@@ -12,7 +18,39 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  static String jsonString=
+  '''
+  {
+  "name": "John Smith",
+  "email": "john@example.com"
+}
+  ''';
+
+ // String response =  rootBundle.loadString(jsonString) as String;
+
+  Future<String> getJsonDate() {
+    return rootBundle.loadString('jsons/test.json');
+  }
+
+  User getJson() {
+    var r= rootBundle.loadString('jsons/test.json');
+    Map<String, dynamic> userMap = jsonDecode(r as String);
+    var user = User.fromJson(userMap);
+    return user;
+  }
+
+Future<User> getJson2() async {
+  String response = await rootBundle.loadString('jsons/test.json');
+  Map<String, dynamic> userMap = jsonDecode(response);
+  var user = User.fromJson(userMap);
+
+  return user;
+}
+
+  /////////////////////////////////
   final GlobalKey<ScaffoldState> _globalKeyMenuPerson = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -91,7 +129,20 @@ class _HomeState extends State<Home> {
   }
 
   void _screenMassege(BuildContext context){
-    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MessageWithPeople()));
+
+    Map<String, dynamic> userMap = jsonDecode(jsonString);
+    var user = User.fromJson(userMap);
+
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
+        //MessageWithPeople()
+    Container(
+      color: Colors.yellow,
+      width: 600,
+      height: 600,
+      child: Text(user.name),
+    ),
+
+    ));
   }
 
 }
