@@ -19,131 +19,184 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  static String jsonString=
-  '''
-  {
-  "name": "John Smith",
-  "email": "john@example.com"
-}
-  ''';
+   String jsonString = '{"users":[{"id": 1,"username": "SammyShark","firstName": "Marcel","lastName": "Jones","maidenName": "Smith","online":true},{"id": 2,"username": "JesseOctopus","firstName": "Assunta","lastName": "Rath","maidenName": "Heller","online": false},{"id": 3,"username": "DrewSquid","firstName": "Enoch","lastName": "Lynch","maidenName": "Heidenreich","online": false}]}';
 
- // String response =  rootBundle.loadString(jsonString) as String;
+// String response =  rootBundle.loadString(jsonString) as String;
 
-  Future<String> getJsonDate() {
-    return rootBundle.loadString('jsons/test.json');
-  }
+//   Future<String> getJsonDate() {
+//     return rootBundle.loadString('jsons/test.json');
+//   }
+//
+//   User getJson() {
+//     var r= rootBundle.loadString('jsons/test.json');
+//     Map<String, dynamic> userMap = jsonDecode(r as String);
+//     var user = User.fromJson(userMap);
+//     return user;
+//   }
+//
+// Future<User> getJson2() async {
+//   String response = await rootBundle.loadString('jsons/test.json');
+//   Map<String, dynamic> userMap = jsonDecode(response);
+//   var user = User.fromJson(userMap);
 
-  User getJson() {
-    var r= rootBundle.loadString('jsons/test.json');
-    Map<String, dynamic> userMap = jsonDecode(r as String);
-    var user = User.fromJson(userMap);
-    return user;
-  }
+//  return user;
+//}
 
-Future<User> getJson2() async {
-  String response = await rootBundle.loadString('jsons/test.json');
-  Map<String, dynamic> userMap = jsonDecode(response);
-  var user = User.fromJson(userMap);
+/////////////////////////////////
+final GlobalKey<ScaffoldState> _globalKeyMenuPerson = GlobalKey();
 
-  return user;
-}
+@override
+Widget build(BuildContext context) {
 
-  /////////////////////////////////
-  final GlobalKey<ScaffoldState> _globalKeyMenuPerson = GlobalKey();
+  return Scaffold(
+    body: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Color.fromRGBO(254, 240, 220, 10),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text('Massage proger'),
+          centerTitle: true,
+          backgroundColor: Colors.deepPurpleAccent,
+          toolbarHeight: 25,
+        ),
+        key: _globalKeyMenuPerson,
+        drawer: PanelMenu(),
 
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    var _scaffoldKey;
-    return  Scaffold(
-      body:MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          backgroundColor: Color.fromRGBO(254,240,220,10),
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title:Text('Massage proger'),
-            centerTitle: true,
-            backgroundColor: Colors.deepPurpleAccent,
-            toolbarHeight: 25,
-          ),
-          key: _globalKeyMenuPerson,
-          drawer: PanelMenu(),
-
-          body: SafeArea(
-            child: Padding(padding: EdgeInsets.all(20),
-              child:Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(onTap: ()=> _globalKeyMenuPerson.currentState!.openDrawer(),child: Icon(Icons.arrow_back_ios),),
-                      //  IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back_ios_new_rounded),),
-                      Text('Недавно писавшие люди', ),
-                      IconButton(onPressed: (){}, icon: Icon(Icons.search_rounded,size: 30,)),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+        body: SafeArea(
+          child: Padding(padding: EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(onTap: () =>
+                        _globalKeyMenuPerson.currentState!.openDrawer(),
+                      child: Icon(Icons.arrow_back_ios),),
+                    //  IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back_ios_new_rounded),),
+                    Text('Недавно писавшие люди',),
+                    IconButton(onPressed: () {},
+                        icon: Icon(Icons.search_rounded, size: 30,)),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
 
 
-                      Container(
-                        width: 320, //изменить на авто ширину !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        height: 250,
-                        decoration: BoxDecoration(color: Colors.white,),
-                        child: CarouselRecentPeople(),
+                    Container(
+                      width: 320,
+                      //изменить на авто ширину !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      height: 250,
+                      decoration: BoxDecoration(color: Colors.white,),
+                      child: CarouselRecentPeople(),
 
+                    ),
+                  ],
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  verticalDirection: VerticalDirection.down,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+
+                  children: [
+                    Padding(padding: EdgeInsets.only(top: 260,),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            _screenMassege(context);
+                          },
+                          style: ButtonStyle(
+
+                            backgroundColor: MaterialStateProperty.all(
+                                Colors.black),
+                            fixedSize: MaterialStateProperty.all(
+                                const Size(200, 40)),
+                          ), child: Text('Переписки')
                       ),
-                    ],
-                  ),
-                  Column(
-                     mainAxisSize: MainAxisSize.min,
-                    verticalDirection: VerticalDirection.down,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    ),
 
-                    children: [
-                      Padding(padding: EdgeInsets.only(top: 260,),
-                        child: ElevatedButton(
-                            onPressed: (){_screenMassege(context);},
-                            style: ButtonStyle(
+                  ],
+                ),
+              ],
 
-                              backgroundColor: MaterialStateProperty.all(Colors.black),
-                              fixedSize: MaterialStateProperty.all(const Size(200, 40)),
-                            ) ,child: Text('Переписки')
-                        ),
-                      ),
-
-                    ],
-                  ),
-                ],
-
-              ),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  void _screenMassege(BuildContext context){
-
-    Map<String, dynamic> userMap = jsonDecode(jsonString);
-    var user = User.fromJson(userMap);
-
-    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-        //MessageWithPeople()
-    Container(
-      color: Colors.yellow,
-      width: 600,
-      height: 600,
-      child: Text(user.name),
     ),
+  );
+}
 
-    ));
+  //String jsonString = '{"users": [{"name": "John", "age": 30}, {"name": "Jane", "age": 25}]}';
+
+  // Future<String> loadJsonFromAsset() async {
+  //   return await rootBundle.loadString('assets/users.json');
+  // }
+
+  Future<UserList> fetchUserList() async {
+    //final jsonString = await loadJsonFromAsset();
+    final jsonResponse = json.decode(jsonString);
+    final userList = UserList.fromJson(jsonResponse);
+    return userList;
   }
+
+  // getDataFromJson(){
+  //
+  //   Map<String, dynamic> data = json.decode(jsonString);
+  //
+  //   List<dynamic> users = data['users'];
+  //   for (var user in users) {
+  //     String name = user['name'];
+  //     int age = user['age'];
+  //     // do something with name and age
+  //   }
+  // }
+
+// Future<List<User>> getDataFromFakeServer()async{
+//   return await Future.delayed(Duration(seconds: 2),(){
+//     List<dynamic> data = jsonDecode(jsonString);
+//     List<User> users = data.map((data) => User.fromJson(data)).toString();
+//     List<User> imagesList = jsonString.map((i) => Image.fromJson(i)).toList();
+//     return users;
+//   });
+// }
+
+
+
+
+Future<void> _screenMassege(BuildContext context) async {
+  final userList = await fetchUserList();
+  final users = userList.users;
+  for (final user in users) {
+    print(user.username);
+  }
+
+  Navigator.of(context).push(MaterialPageRoute(
+    builder: (context) =>
+  //MessageWithPeople()
+  Drawer(
+    width: 400,
+    child: ListView.builder(
+
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(padding: EdgeInsets.only(left:10,top:10,right:10),
+          child: Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Color.fromRGBO(254,240,220,200), border: Border.all(color: Colors.black26)),
+            child:  new ListTile(
+                title: new Text(users[index].firstName),
+                onTap: (){}
+            ),
+          ),
+        );
+      },
+      itemCount: users.length,
+    ),
+  ),
+
+  ));
+}
 
 }
 

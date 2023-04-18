@@ -1,4 +1,27 @@
+[
 {
-  "name": "John Smith",
-  "email": "john@example.com"
-}
+  "id": 1,
+  "username": "SammyShark",
+  "firstName": "Marcel",
+  "lastName": "Jones",
+  "maidenName": "Smith",
+  "online": true
+},
+{
+"id": 2,
+"username": "JesseOctopus",
+"firstName": "Assunta",
+"lastName": "Rath",
+"maidenName": "Heller",
+"online": false
+},
+    {
+      "id": 3,
+      "username": "DrewSquid",
+      "firstName": "Enoch",
+      "lastName": "Lynch",
+      "maidenName": "Heidenreich",
+      "online": false
+    }
+    ]
+

@@ -1,4 +1,7 @@
  import 'package:flutter/material.dart';
+import 'package:project_app/input/input.dart';
+
+import '../home/home.dart';
 
 
 class PanelMenu extends StatefulWidget{
@@ -12,8 +15,11 @@ class PanelMenu extends StatefulWidget{
 
 class _PanelState extends State<PanelMenu>{
 
+  late BuildContext _context;
+
   @override
   Widget build(BuildContext context) {
+    _context = context;
     return Drawer(
       child: new ListView(
         children: <Widget>[
@@ -36,12 +42,19 @@ class _PanelState extends State<PanelMenu>{
           new ListTile(
               title: new Text("Выйти"),
               leading: Icon(Icons.output),
-              onTap: (){}
+              onTap: (){performLogin();}
           )
         ],
       ),
     );
   }
+  void performLogin() {
+    Navigator.push(
+        _context,
+        new MaterialPageRoute(
+            builder: (context) => new Input()));
+  }
+
 }
 
 // abstract class menu extends StatelessWidget{
