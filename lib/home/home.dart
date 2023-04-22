@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -172,30 +172,48 @@ Future<void> _screenMassege(BuildContext context) async {
   for (final user in users) {
     print(user.username);
   }
+  //TODO: сделать чтобы свой логин и пароль
+  var response = await http.post(Uri.http('195.19.114.66:8888'),
+      headers: {'Accept':'application/json'},
+     //TODO: мб метод какой есть чтобы не вручную json собирать но и так можно
+      body: "{\"RequestType\":\"GetDialogsList\",\"Login\":\"admin\",\"Password\": \"diamat\"}"
+  );
+   print(response.body);
+  //Коды ответа: 200 успех,400 неправильно составлен запрос, 418 неправильный логин/пароль
+  if(response.statusCode==200) {
+    Map<String, dynamic> jsonmp=jsonDecode(response.body);
+    List dynamiclist = jsonmp['Logins'];
+    List<String> Logins = dynamiclist.cast<String>();
+    dynamiclist = jsonmp['Unread'];
+    final List<int> Unread=dynamiclist.cast<int>();
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) =>
+      //MessageWithPeople()
+      Drawer(
+        width: 400,
+        child: ListView.builder(
 
-  Navigator.of(context).push(MaterialPageRoute(
-    builder: (context) =>
-  //MessageWithPeople()
-  Drawer(
-    width: 400,
-    child: ListView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: EdgeInsets.only(left: 10, top: 10, right: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    color: Color.fromRGBO(254, 240, 220, 200),
+                    border: Border.all(color: Colors.black26)),
+                child: new ListTile(
+                    title: new Text(Logins[index]+" Непрочитанных: "+Unread[index].toString()),//TODO не понял че за индекс но крч надо от количества полученных собеседников
+                    onTap: () {}
+                ),
+              ),
+            );
+          },
+          itemCount: users.length,
+        ),
+      ),
 
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(padding: EdgeInsets.only(left:10,top:10,right:10),
-          child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Color.fromRGBO(254,240,220,200), border: Border.all(color: Colors.black26)),
-            child:  new ListTile(
-                title: new Text(users[index].firstName),
-                onTap: (){}
-            ),
-          ),
-        );
-      },
-      itemCount: users.length,
-    ),
-  ),
-
-  ));
+    ));
+  }
 }
 
 }
