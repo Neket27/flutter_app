@@ -11,7 +11,10 @@ import 'package:flutter/services.dart' show rootBundle;
 
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) :super(key: key);
+  String _login;
+  String _password;
+
+  Home(this._login,this._password);
 
   @override
   State<Home> createState() => _HomeState();
@@ -19,7 +22,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-   String jsonString = '{"users":[{"id": 1,"username": "SammyShark","firstName": "Marcel","lastName": "Jones","maidenName": "Smith","online":true},{"id": 2,"username": "JesseOctopus","firstName": "Assunta","lastName": "Rath","maidenName": "Heller","online": false},{"id": 3,"username": "DrewSquid","firstName": "Enoch","lastName": "Lynch","maidenName": "Heidenreich","online": false}]}';
+  String jsonString = '{"users":[{"id": 1,"username": "SammyShark","firstName": "Marcel","lastName": "Jones","maidenName": "Smith","online":true},{"id": 2,"username": "JesseOctopus","firstName": "Assunta","lastName": "Rath","maidenName": "Heller","online": false},{"id": 3,"username": "DrewSquid","firstName": "Enoch","lastName": "Lynch","maidenName": "Heidenreich","online": false}]}';
 
 // String response =  rootBundle.loadString(jsonString) as String;
 
@@ -43,91 +46,91 @@ class _HomeState extends State<Home> {
 //}
 
 /////////////////////////////////
-final GlobalKey<ScaffoldState> _globalKeyMenuPerson = GlobalKey();
+  final GlobalKey<ScaffoldState> _globalKeyMenuPerson = GlobalKey();
 
-@override
-Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
 
-  return Scaffold(
-    body: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Color.fromRGBO(254, 240, 220, 10),
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text('Massage proger'),
-          centerTitle: true,
-          backgroundColor: Colors.deepPurpleAccent,
-          toolbarHeight: 25,
-        ),
-        key: _globalKeyMenuPerson,
-        drawer: PanelMenu(),
+    return Scaffold(
+      body: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          backgroundColor: Color.fromRGBO(254, 240, 220, 10),
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Text('Massage proger'),
+            centerTitle: true,
+            backgroundColor: Colors.deepPurpleAccent,
+            toolbarHeight: 25,
+          ),
+          key: _globalKeyMenuPerson,
+          drawer: PanelMenu(),
 
-        body: SafeArea(
-          child: Padding(padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(onTap: () =>
-                        _globalKeyMenuPerson.currentState!.openDrawer(),
-                      child: Icon(Icons.arrow_back_ios),),
-                    //  IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back_ios_new_rounded),),
-                    Text('Недавно писавшие люди',),
-                    IconButton(onPressed: () {},
-                        icon: Icon(Icons.search_rounded, size: 30,)),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+          body: SafeArea(
+            child: Padding(padding: EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(onTap: () =>
+                          _globalKeyMenuPerson.currentState!.openDrawer(),
+                        child: Icon(Icons.arrow_back_ios),),
+                      //  IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back_ios_new_rounded),),
+                      Text('Недавно писавшие люди',),
+                      IconButton(onPressed: () {},
+                          icon: Icon(Icons.search_rounded, size: 30,)),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
 
 
-                    Container(
-                      width: 320,
-                      //изменить на авто ширину !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                      height: 250,
-                      decoration: BoxDecoration(color: Colors.white,),
-                      child: CarouselRecentPeople(),
+                      Container(
+                        width: 320,
+                        //изменить на авто ширину !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        height: 250,
+                        decoration: BoxDecoration(color: Colors.white,),
+                        child: CarouselRecentPeople(),
 
-                    ),
-                  ],
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  verticalDirection: VerticalDirection.down,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-
-                  children: [
-                    Padding(padding: EdgeInsets.only(top: 260,),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            _screenMassege(context);
-                          },
-                          style: ButtonStyle(
-
-                            backgroundColor: MaterialStateProperty.all(
-                                Colors.black),
-                            fixedSize: MaterialStateProperty.all(
-                                const Size(200, 40)),
-                          ), child: Text('Переписки')
                       ),
-                    ),
+                    ],
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    verticalDirection: VerticalDirection.down,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
 
-                  ],
-                ),
-              ],
+                    children: [
+                      Padding(padding: EdgeInsets.only(top: 260,),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              _screenMassege(context);
+                            },
+                            style: ButtonStyle(
 
+                              backgroundColor: MaterialStateProperty.all(
+                                  Colors.black),
+                              fixedSize: MaterialStateProperty.all(
+                                  const Size(200, 40)),
+                            ), child: Text('Переписки')
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ],
+
+              ),
             ),
           ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   //String jsonString = '{"users": [{"name": "John", "age": 30}, {"name": "Jane", "age": 25}]}';
 
@@ -166,55 +169,55 @@ Widget build(BuildContext context) {
 
 
 
-Future<void> _screenMassege(BuildContext context) async {
-  final userList = await fetchUserList();
-  final users = userList.users;
-  for (final user in users) {
-    print(user.username);
-  }
-  //TODO: сделать чтобы свой логин и пароль
-  var response = await http.post(Uri.http('195.19.114.66:8888'),
-      headers: {'Accept':'application/json'},
-     //TODO: мб метод какой есть чтобы не вручную json собирать но и так можно
-      body: "{\"RequestType\":\"GetDialogsList\",\"Login\":\"admin\",\"Password\": \"diamat\"}"
-  );
-   print(response.body);
-  //Коды ответа: 200 успех,400 неправильно составлен запрос, 418 неправильный логин/пароль
-  if(response.statusCode==200) {
-    Map<String, dynamic> jsonmp=jsonDecode(response.body);
-    List dynamiclist = jsonmp['Logins'];
-    List<String> Logins = dynamiclist.cast<String>();
-    dynamiclist = jsonmp['Unread'];
-    final List<int> Unread=dynamiclist.cast<int>();
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) =>
-      //MessageWithPeople()
-      Drawer(
-        width: 400,
-        child: ListView.builder(
+  Future<void> _screenMassege(BuildContext context) async {
+    final userList = await fetchUserList();
+    final users = userList.users;
+    for (final user in users) {
+      print(user.username);
+    }
+    //TODO: сделать чтобы свой логин и пароль
+    var response = await http.post(Uri.http('195.19.114.66:8888'),
+        headers: {'Accept':'application/json'},
+        //TODO: мб метод какой есть чтобы не вручную json собирать но и так можно
+        body: "{\"RequestType\":\"GetDialogsList\",\"Login\":\"${widget._login}\",\"Password\": \"${widget._password}\"}"
+    );
+    print(response.body);
+    //Коды ответа: 200 успех,400 неправильно составлен запрос, 418 неправильный логин/пароль
+    if(response.statusCode==200) {
+      Map<String, dynamic> jsonmp=jsonDecode(response.body);
+      List dynamiclist = jsonmp['Logins'];
+      List<String> Logins = dynamiclist.cast<String>();
+      dynamiclist = jsonmp['Unread'];
+      final List<int> Unread=dynamiclist.cast<int>();
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+        //MessageWithPeople()
+        Drawer(
+          width: 400,
+          child: ListView.builder(
 
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: EdgeInsets.only(left: 10, top: 10, right: 10),
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    color: Color.fromRGBO(254, 240, 220, 200),
-                    border: Border.all(color: Colors.black26)),
-                child: new ListTile(
-                    title: new Text(Logins[index]+" Непрочитанных: "+Unread[index].toString()),//TODO не понял че за индекс но крч надо от количества полученных собеседников
-                    onTap: () {}
+            itemBuilder: (BuildContext context, int index) {
+              return
+                Padding(
+                padding: EdgeInsets.only(left: 10, top: 10, right: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40),
+                      color: Color.fromRGBO(254, 240, 220, 200),
+                      border: Border.all(color: Colors.black26)),
+                  child: new ListTile(
+                      title: new Text(Logins[index]+" Непрочитанных: "+Unread[index].toString()),//TODO не понял че за индекс но крч надо от количества полученных собеседников
+                      onTap: () {}
+                  ),
                 ),
-              ),
-            );
-          },
-          itemCount: users.length,
+              );
+            },
+            itemCount: Logins.length,
+          ),
         ),
-      ),
 
-    ));
+      ));
+    }
   }
-}
 
 }
-

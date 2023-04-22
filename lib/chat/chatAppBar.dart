@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:project_app/people/messageWithPeoples.dart';
 import '../Assets.dart';
 import '../Palette.dart';
+import '../models/user.dart';
 
-class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
+class ChatAppBar extends StatelessWidget  implements PreferredSizeWidget {
+
+
   final double height = 100;
+  late  User user;
+
+  ChatAppBar(User user){
+    this.user=user;
+  }
+
   @override
   Widget build(BuildContext context) {
     var textHeading = TextStyle(color: Palette.primaryTextColor, fontSize: 20); // Text style for the name
@@ -47,7 +57,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: <Widget>[
-                                                  Text('Aditya Gurjar', style: textHeading),
+                                                  Text(user.firstName, style: textHeading),
                                                   Text('@adityagurjar', style: textStyle)
                                                 ],
                                               ))),
@@ -90,7 +100,8 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                               child: CircleAvatar(
                                 radius: (80 - (width * .06)) / 2,
                                 backgroundImage: Image.asset(
-                                  Assets.user,
+                                    user.avatar.toString(),
+
                                 ).image,
                               )))),
                 ]))));
@@ -98,4 +109,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Size.fromHeight(height);
+
+
+
 }

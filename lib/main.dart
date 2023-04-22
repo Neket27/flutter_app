@@ -5,7 +5,7 @@ import 'input/input.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: Home(),
+    home: Input(),
   ));
 }
 

@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../Palette.dart';
+import '../models/chatMessage.dart';
+import 'package:http/http.dart' as http;
 
 class ChatItemWidget extends StatelessWidget{
-  var index;
+  int index;
+  List<ChatMessage> messages;
 
-  ChatItemWidget(this.index);
+  ChatItemWidget(this.index,this.messages);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    if (index % 2 == 0) {
+
+//  print('this='+messages[index].user);
+    if (messages[index].user=='Dave') {
       //This is the sent message. We'll later use data from firebase instead of index to determine the message is sent or received.
       return Container(
           child: Column(children: <Widget>[
             Row(
               children: <Widget>[
                 Container(
-                  child: Text(
-                    'This is a sent message',
+                  child: Text( messages[index].message,
                     style: TextStyle(color: Palette.selfMessageColor, fontSize: 14),
                   ),
                   padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
@@ -56,7 +59,7 @@ class ChatItemWidget extends StatelessWidget{
               children: <Widget>[
                 Container(
                   child: Text(
-                    'This is a received message',
+                    messages[index].message,
                     style: TextStyle(color: Palette.otherMessageColor,fontSize: 14),
                   ),
                   padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),

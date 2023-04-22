@@ -100,7 +100,7 @@ class Input extends StatelessWidget {
 
   void  performLogin() async{//TODO по смыслу ipшник где нибудь в одном месте хранить
     var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
-         body:  "{\"RequestType\":\"Autorization\",\"Login\":\"admin\",\"Password\": \"diamat1\"}"//TODO: из формы логин и пароль надо
+         body:  "{\"RequestType\":\"Autorization\",\"Login\":\"${_login}\",\"Password\": \"${_password}\"}"//TODO: из формы логин и пароль надо
      );
     // 200 - успех 418 неправильный логин или пароль остальное чет не так с запросом
     if(response.statusCode==200) {
@@ -110,7 +110,7 @@ class Input extends StatelessWidget {
           _context,
           new MaterialPageRoute(
               builder: (context) {
-                return new Home();
+                return new Home(_login,_password);
               }
           ));
     }else if(response.statusCode==418){
@@ -134,7 +134,7 @@ class Input extends StatelessWidget {
 
   void performReg() async{
     var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
-        body:  "{\"RequestType\":\"Registration\",\"Login\":\"su\",\"Password\": \"diamat\"}"// TODO: так же из формы берем
+        body:  "{\"RequestType\":\"Registration\",\"Login\":\"${_login}\",\"Password\": \"${_password}\"}"// TODO: так же из формы берем
     );
     if(response.statusCode==200) {
       //TODO сохраняем логин и пароль для дальнейших запросов
@@ -150,7 +150,7 @@ class Input extends StatelessWidget {
           _context,
           new MaterialPageRoute(
               builder: (context) {
-                return new Home();
+                return new Home(_login,_password);
               }
           ));
     }
