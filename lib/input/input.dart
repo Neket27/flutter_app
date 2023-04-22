@@ -94,32 +94,84 @@ class Input extends StatelessWidget {
     final form = formKey.currentState;
     if (form!.validate()) {
       form.save();
-      performLogin();
+      performReg();
     }
   }
 
-  void performLogin() {
-    hideKeyboard();
-    Navigator.push(
-        _context,
-        new MaterialPageRoute(
-            builder: (context){
-              postDataLogin();
-             return new Home();
-            }
-        ));
+  void  performLogin() async{//TODO по смыслу ipшник где нибудь в одном месте хранить
+    var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
+         body:  "{\"RequestType\":\"Autorization\",\"Login\":\"admin\",\"Password\": \"diamat1\"}"//TODO: из формы логин и пароль надо
+     );
+    // 200 - успех 418 неправильный логин или пароль остальное чет не так с запросом
+    if(response.statusCode==200) {
+      //TODO сохраняем логин и пароль для дальнейших запросов
+      hideKeyboard();
+      Navigator.push(
+          _context,
+          new MaterialPageRoute(
+              builder: (context) {
+                return new Home();
+              }
+          ));
+    }else if(response.statusCode==418){
+      showDialog(
+        context: _context,
+        builder: (_) => AlertDialog(
+          title: Text(""),
+          content: Text('Неправильный логин или пароль'),
+        ),
+      );
+    }else{
+    showDialog(
+    context: _context,
+    builder: (_) => AlertDialog(
+    title: Text(""),
+    content: Text('Ошибка'),
+    ),
+    );
+    }
   }
 
-  void performReg() {
-    hideKeyboard();
-    Navigator.push(
-        _context,
-        new MaterialPageRoute(
-            builder: (context){
-              postDataReg();
-              return new Home();
-            }
-        ));
+  void performReg() async{
+    var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
+        body:  "{\"RequestType\":\"Registration\",\"Login\":\"su\",\"Password\": \"diamat\"}"// TODO: так же из формы берем
+    );
+    if(response.statusCode==200) {
+      //TODO сохраняем логин и пароль для дальнейших запросов
+      showDialog(
+        context: _context,
+        builder: (_) => AlertDialog(
+          title: Text(""),
+          content: Text('Регистрация прошла успешно'),
+        ),
+      );
+      hideKeyboard();
+      Navigator.push(
+          _context,
+          new MaterialPageRoute(
+              builder: (context) {
+                return new Home();
+              }
+          ));
+    }
+     else if(response.statusCode==418){
+        showDialog(
+          context: _context,
+          builder: (_) => AlertDialog(
+            title: Text(""),
+            content: Text('Логин занят'),
+          ),
+        );
+      }else{
+        showDialog(
+          context: _context,
+          builder: (_) => AlertDialog(
+            title: Text(""),
+            content: Text('Ошибка'),
+          ),
+        );
+      }
+
   }
 
 
@@ -127,20 +179,6 @@ class Input extends StatelessWidget {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
   }
 
-  postDataLogin()async{
-//     var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
-//         body:  "{\"RequestType\":\"Autorization\",\"Login\":\"admin\",\"Password\": \"diamat1\"}"
-//     );
-// print(response.body);
-  }
-
-  postDataReg()async{
-  //   var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
-  //       body:  "{\"RequestType\":\"Registration\",\"Login\":\"admin2\",\"Password\": \"diamat2\"}"
-  //   );
-  //
-  //   print(response.body);
-   }
 
 }
 
