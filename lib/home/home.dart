@@ -170,15 +170,8 @@ class _HomeState extends State<Home> {
 
 
   Future<void> _screenMassege(BuildContext context) async {
-    final userList = await fetchUserList();
-    final users = userList.users;
-    for (final user in users) {
-      print(user.username);
-    }
-    //TODO: сделать чтобы свой логин и пароль
     var response = await http.post(Uri.http('195.19.114.66:8888'),
         headers: {'Accept':'application/json'},
-        //TODO: мб метод какой есть чтобы не вручную json собирать но и так можно
         body: "{\"RequestType\":\"GetDialogsList\",\"Login\":\"${widget._login}\",\"Password\": \"${widget._password}\"}"
     );
     print(response.body);
@@ -191,30 +184,39 @@ class _HomeState extends State<Home> {
       final List<int> Unread=dynamiclist.cast<int>();
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) =>
-        //MessageWithPeople()
-        Drawer(
-          width: 400,
-          child: ListView.builder(
-
-            itemBuilder: (BuildContext context, int index) {
-              return
-                Padding(
-                padding: EdgeInsets.only(left: 10, top: 10, right: 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40),
-                      color: Color.fromRGBO(254, 240, 220, 200),
-                      border: Border.all(color: Colors.black26)),
-                  child: new ListTile(
-                      title: new Text(Logins[index]+" Непрочитанных: "+Unread[index].toString()),//TODO не понял че за индекс но крч надо от количества полученных собеседников
-                      onTap: () {}
+            Scaffold(
+              body: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                home: Scaffold(
+                  backgroundColor: Color.fromRGBO(254, 240, 220, 10),
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    title: Text('Переписки'),
+                    centerTitle: true,
+                    backgroundColor: Colors.deepPurpleAccent,
+                    toolbarHeight: 25,
+                  ),
+                  body: SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10, top: 10, right: 10),
+                      child: Container(
+                        child: Drawer(
+                          width: 400,
+                          child: ListView.builder(
+                            itemBuilder: (BuildContext context, int index) {
+                              return MessageWithPeople(Logins[index],Unread[index]);
+                            },
+                            itemCount: Logins.length,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              );
-            },
-            itemCount: Logins.length,
-          ),
-        ),
+              ),
+            ),
+
+
 
       ));
     }

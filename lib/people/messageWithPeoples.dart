@@ -9,7 +9,11 @@ import '../models/user.dart';
 
 
 class MessageWithPeople  extends StatefulWidget{
-  const MessageWithPeople ({Key? key}):super(key: key);
+  String _login;
+  int _unreadMessages;
+
+  MessageWithPeople (this._login,this._unreadMessages);
+
   @override
   State<MessageWithPeople> createState() {
   return new _MessageWithPeopleState();
@@ -54,33 +58,50 @@ class _MessageWithPeopleState extends State<MessageWithPeople>{
 
   @override
   Widget build(BuildContext context) {
+
     return
-      Drawer(
-        child: ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(padding: EdgeInsets.only(left:10,top:10,right:10),
-              child: Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Color.fromRGBO(254,240,220,200), border: Border.all(color: Colors.black26)),
-                child:  new ListTile(
-                    title: new Text(_users[index].firstName + ' '+_users[index].lastName),
-                    leading: CircleAvatar(backgroundImage: AssetImage(_users[index].avatar.toString()), radius: 20,),
-                    onTap: (){
-                      setState(() {
-                        _id=index;
-                      });
-                      _screenMassegeWithPeople(context);
-                    }
-                ),
-              ),
-            );
-          },
-          itemCount: _users.length,
+      Padding(
+        padding: EdgeInsets.only(left: 10, top: 10, right: 10),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40),
+              color: Color.fromRGBO(254, 240, 220, 200),
+              border: Border.all(color: Colors.black26)),
+          child: new ListTile(
+              title: new Text(widget._login+" Непрочитанных: "+widget._unreadMessages.toString()),
+              onTap: () {_screenMassegeWithPeople(context);}
+          ),
         ),
       );
+
+      // Drawer(
+      //   child: ListView.builder(
+      //     itemBuilder: (BuildContext context, int index) {
+      //       return Padding(padding: EdgeInsets.only(left:10,top:10,right:10),
+      //         child: Container(
+      //           decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Color.fromRGBO(254,240,220,200), border: Border.all(color: Colors.black26)),
+      //           child:  new ListTile(
+      //               title: new Text(_users[index].firstName + ' '+_users[index].lastName),
+      //               leading: CircleAvatar(backgroundImage: AssetImage(_users[index].avatar.toString()), radius: 20,),
+      //               onTap: (){
+      //                 setState(() {
+      //                   _id=index;
+      //                 });
+      //                 _screenMassegeWithPeople(context);
+      //               }
+      //           ),
+      //         ),
+      //       );
+      //     },
+      //     itemCount: _users.length,
+      //   ),
+      // );
   }
   void _screenMassegeWithPeople(BuildContext context){
-    print('iddddddddddd='+_id.toString());
+    User user = new User(id: 77, username: 'Neket', firstName: 'Kulga', lastName: 'lastName', online:true, avatar: '');
+
+
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (context)=> ConversationPageList(_users[_id!])));
+        MaterialPageRoute(builder: (context)=> ConversationPageList(user)));
   }
 }
