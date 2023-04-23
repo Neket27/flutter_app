@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../Palette.dart';
+import '../models/user.dart';
 
 class InputWidget extends StatelessWidget {
+
+  User _user;
+  String _RcvLogin;
+
+  InputWidget (this._user,this._RcvLogin);
 
   final TextEditingController textEditingController = new TextEditingController();
   late String _message;
@@ -60,13 +66,13 @@ class InputWidget extends StatelessWidget {
     );
   }
 
-  Future<void> _sendMessage() async { // TODO ыункция отправки
+  Future<void> _sendMessage() async {
     textEditingController.clear();
     try {
-      print(textEditingController.text);// TODO текс из поля отправки
-      //var response = await http.post(Uri.http('195.19.114.66:8888', ''),
-      //    body: ''
-     // );
+      print(textEditingController.text);//TODO ошибка, хз почему не выдает текст
+      var response = await http.post(Uri.http('195.19.114.66:8888'),
+          body: '{"RequestType":"SendMessage","Login":"${_user.username}","Password": "${_user.password}","LoginRcv":"${_RcvLogin}","Message": "${textEditingController.text}"}'
+      );//TODO: свой логин пароль и собеседник
       print('Ответ');
       //print(response.body.toString());
 

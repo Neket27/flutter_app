@@ -10,7 +10,8 @@ import 'chatItemWidget.dart';
 class ChatListWidget extends StatefulWidget{
 
   User _user;
-  ChatListWidget (this._user);
+  String _RcvLogin;
+  ChatListWidget (this._user,this._RcvLogin);
 
 
   final ScrollController listScrollController = new ScrollController();
@@ -51,9 +52,9 @@ class ChatListWidget extends StatefulWidget{
 
   Future<String> getData() async {
     try {
-      //TODO: брать свой логин, пароль и текущего собеседника
+      //TODO:
       var response = await http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
-          body: '{"RequestType":"GetDialog","Login":"${widget._user.username}","Password": "${widget._user.password}","LoginRcv":"${widget._user}"}'
+          body: '{"RequestType":"GetDialog","Login":"${widget._user.username}","Password": "${widget._user.password}","LoginRcv":"${widget._RcvLogin}"}'
       );
       //final url = Uri.parse('https://1928aec5-0ac4-42d7-a5ad-29a0d6161e41.mock.pstmn.io/test/message');
 
