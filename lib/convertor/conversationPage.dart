@@ -29,7 +29,7 @@ class ConversationPage  extends StatelessWidget  {
             body: Stack(children: <Widget>[
               Column(
                 children: <Widget>[
-                  ChatListWidget(),//Chat list
+                  ChatListWidget(_user),//Chat list
                   InputWidget() // The input widget
                 ],
               ),

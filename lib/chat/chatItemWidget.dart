@@ -4,16 +4,19 @@ import '../Palette.dart';
 import '../models/chatMessage.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/user.dart';
+
 class ChatItemWidget extends StatelessWidget{
   int index;
+  User _user;
   List<ChatMessage> messages;
 
-  ChatItemWidget(this.index,this.messages);
+  ChatItemWidget(this.index,this._user,this.messages);
 
   @override
   Widget build(BuildContext context) {
 //  print('this='+messages[index].user);
-    if (messages[index].Login=='admin') {//TODO: логин текущего юзера
+    if (messages[index].Login==_user.username) {
       //This is the sent message. We'll later use data from firebase instead of index to determine the message is sent or received.
       return Container(
           child: Column(children: <Widget>[

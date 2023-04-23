@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import '../Palette.dart';
 
 class InputWidget extends StatelessWidget {
 
   final TextEditingController textEditingController = new TextEditingController();
-
+  late String _message;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,7 +16,7 @@ class InputWidget extends StatelessWidget {
               margin: new EdgeInsets.symmetric(horizontal: 1.0),
               child: new IconButton(
                 icon: new Icon(Icons.face),
-                color: Palette.primaryColor, onPressed: () {  },
+                color: Palette.primaryColor, onPressed: () { },
               ),
             ),
             color: Colors.white,
@@ -37,14 +37,13 @@ class InputWidget extends StatelessWidget {
             ),
     ),
           ),
-
           // Send Message Button
           Material(
             child: new Container(
               margin: new EdgeInsets.symmetric(horizontal: 8.0),
               child: new IconButton(
                 icon: new Icon(Icons.send),
-                onPressed: () => {},
+                onPressed: () => {_sendMessage()},
                 color: Palette.primaryColor,
               ),
             ),
@@ -59,5 +58,20 @@ class InputWidget extends StatelessWidget {
               top: new BorderSide(color: Palette.greyColor, width: 0.5)),
           color: Colors.white),
     );
+  }
+
+  Future<void> _sendMessage() async { // TODO ыункция отправки
+    textEditingController.clear();
+    try {
+      print(textEditingController.text);// TODO текс из поля отправки
+      //var response = await http.post(Uri.http('195.19.114.66:8888', ''),
+      //    body: ''
+     // );
+      print('Ответ');
+      //print(response.body.toString());
+
+    } catch (error) {
+      print("EERROR: $error");
+    }
   }
 }

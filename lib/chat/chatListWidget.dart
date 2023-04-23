@@ -5,9 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import '../models/chatMessage.dart';
+import '../models/user.dart';
 import 'chatItemWidget.dart';
 class ChatListWidget extends StatefulWidget{
-  ChatListWidget ({Key? key}):super(key: key);
+
+  User _user;
+  ChatListWidget (this._user);
 
 
   final ScrollController listScrollController = new ScrollController();
@@ -50,7 +53,7 @@ class ChatListWidget extends StatefulWidget{
     try {
       //TODO: брать свой логин, пароль и текущего собеседника
       var response = await http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
-          body: '{"RequestType":"GetDialog","Login":"admin","Password": "diamat","LoginRcv":"ussr"}'
+          body: '{"RequestType":"GetDialog","Login":"${widget._user.username}","Password": "${widget._user.password}","LoginRcv":"${widget._user}"}'
       );
       //final url = Uri.parse('https://1928aec5-0ac4-42d7-a5ad-29a0d6161e41.mock.pstmn.io/test/message');
 
@@ -84,7 +87,7 @@ class ChatListWidget extends StatefulWidget{
     return Flexible(
         child: ListView.builder(
           padding: EdgeInsets.all(10.0),
-          itemBuilder: (context, index) => ChatItemWidget(index,widget._messages),
+          itemBuilder: (context, index) => ChatItemWidget(index,widget._user,widget._messages),
           itemCount: widget._messages.length,
           reverse: true,
           controller: widget.listScrollController,
