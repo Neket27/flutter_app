@@ -105,6 +105,7 @@ class Input extends StatelessWidget {
          body:  '{"RequestType":"Autorization","Login":"${_login}","Password": "${_password}"}'
      );
     // 200 - успех 418 неправильный логин или пароль остальное чет не так с запросом
+    print(response.statusCode);
     if(response.statusCode==200) {
       print('STATE=OK ${_login} ${_password}');
       hideKeyboard();

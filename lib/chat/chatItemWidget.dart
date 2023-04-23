@@ -13,14 +13,14 @@ class ChatItemWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 //  print('this='+messages[index].user);
-    if (messages[index].user=='Dave') {
+    if (messages[index].Login=='admin') {//TODO: логин текущего юзера
       //This is the sent message. We'll later use data from firebase instead of index to determine the message is sent or received.
       return Container(
           child: Column(children: <Widget>[
             Row(
               children: <Widget>[
                 Container(
-                  child: Text( messages[index].message,
+                  child: Text( messages[index].MessageText,
                     style: TextStyle(color: Palette.selfMessageColor, fontSize: 14),
                   ),
                   padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
@@ -58,7 +58,7 @@ class ChatItemWidget extends StatelessWidget{
               children: <Widget>[
                 Container(
                   child: Text(
-                    messages[index].message,
+                    messages[index].MessageText,
                     style: TextStyle(color: Palette.otherMessageColor,fontSize: 14),
                   ),
                   padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),

@@ -4,16 +4,13 @@ part 'chatMessage.g.dart';
 
 @JsonSerializable()
 class ChatMessage {
-  final String date;
-  final String user;
-  final String message;
-  final String type;
-
+  final String Date;
+  final String Login;
+  final String MessageText;
   ChatMessage({
-    required this.date,
-    required this.user,
-    required this.message,
-    required this.type,
+    required this.Date,
+    required this.Login,
+    required this.MessageText,
   });
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) =>
