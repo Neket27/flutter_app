@@ -5,15 +5,12 @@ import '../models/user.dart';
 
 
 class ConversationPageList extends StatelessWidget  {
-  late  User user;
+  User _user;
+  String _login;
 
-  ConversationPageList(User user){
-    this.user =user;
-  }
+  ConversationPageList(this._user, this._login);
 
-  onversationPageList(User user){
 
-  }
 //
 //
 //   @override
@@ -26,9 +23,9 @@ class ConversationPageList extends StatelessWidget  {
   Widget build(BuildContext context) {
     return PageView(
       children: <Widget>[
-        ConversationPage(user),
-        ConversationPage(user),
-        ConversationPage(user)
+        ConversationPage(_user,_login),
+        ConversationPage(_user,_login),
+        ConversationPage(_user,_login)
       ],
     );
 

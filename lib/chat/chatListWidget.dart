@@ -13,18 +13,13 @@ class ChatListWidget extends StatefulWidget{
 
   final ScrollController listScrollController = new ScrollController();
   late List<ChatMessage> _messages=[];
-  ChatMessage chatMessage =ChatMessage(date: "2014-02-11T14:41:17.000Z",
+
+  ChatMessage chatMessage =ChatMessage(
+      date: "2014-02-11T14:41:17.000Z",
       user: "Neket",
       message: "Dave changed the subject to “Test Chat",
       type: "action");
 
-  //String jsonString = '{"keyDialog_1":{"userMessage":["hey","Как твои дела"],"myMessage":["У меня всё хорошо","Как твои дела?"]}}';
-
-
-
-
-  String jsonString ='{"data":[{"date":"2014-02-11T14:41:17.000Z","user":"Dave","message":"Dave changed the subject to “Test Chat”","type":"action"}, {"date":"2014-02-11T14:42:43.000Z","user":"John","message":"Still testing...?","type":"message"}]}';
-  String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
 
   @override
   State<ChatListWidget> createState() {

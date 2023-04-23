@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import '../home/home.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/user.dart';
+
 class Input extends StatelessWidget {
 
   late String _login;
@@ -100,17 +102,17 @@ class Input extends StatelessWidget {
 
   void  performLogin() async{//TODO по смыслу ipшник где нибудь в одном месте хранить
     var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
-         body:  "{\"RequestType\":\"Autorization\",\"Login\":\"${_login}\",\"Password\": \"${_password}\"}"//TODO: из формы логин и пароль надо
+         body:  '{"RequestType":"Autorization","Login":"${_login}","Password": "${_password}"}'
      );
     // 200 - успех 418 неправильный логин или пароль остальное чет не так с запросом
     if(response.statusCode==200) {
-      //TODO сохраняем логин и пароль для дальнейших запросов
+      print('STATE=OK ${_login} ${_password}');
       hideKeyboard();
       Navigator.push(
           _context,
           new MaterialPageRoute(
               builder: (context) {
-                return new Home(_login,_password);
+                return new Home(new User(username: _login,password: _password, online: true));
               }
           ));
     }else if(response.statusCode==418){
@@ -134,7 +136,7 @@ class Input extends StatelessWidget {
 
   void performReg() async{
     var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
-        body:  "{\"RequestType\":\"Registration\",\"Login\":\"${_login}\",\"Password\": \"${_password}\"}"// TODO: так же из формы берем
+        body:  '{"RequestType":"Registration","Login":"${_login}","Password": "${_password}"}'
     );
     if(response.statusCode==200) {
       //TODO сохраняем логин и пароль для дальнейших запросов
@@ -150,7 +152,7 @@ class Input extends StatelessWidget {
           _context,
           new MaterialPageRoute(
               builder: (context) {
-                return new Home(_login,_password);
+                return new Home(new User(username: _login,password: _password, online: true));
               }
           ));
     }

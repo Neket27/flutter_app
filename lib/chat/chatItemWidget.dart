@@ -12,7 +12,6 @@ class ChatItemWidget extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-
 //  print('this='+messages[index].user);
     if (messages[index].user=='Dave') {
       //This is the sent message. We'll later use data from firebase instead of index to determine the message is sent or received.
@@ -41,7 +40,7 @@ class ChatItemWidget extends StatelessWidget{
                   Container(
                     child: Text(
                       DateFormat('dd MMM kk:mm')
-                          .format(DateTime.fromMillisecondsSinceEpoch(1565888474278)),
+                          .format(DateTime.now()),
                       style: TextStyle(
                           color: Palette.greyColor,
                           fontSize: 12.0,
@@ -74,7 +73,7 @@ class ChatItemWidget extends StatelessWidget{
             Container(
               child: Text(
                 DateFormat('dd MMM kk:mm')
-                    .format(DateTime.fromMillisecondsSinceEpoch(1565888474278)),
+                    .format(DateTime.now()),
                 style: TextStyle(
                     color: Palette.greyColor,
                     fontSize: 12.0,

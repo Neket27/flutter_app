@@ -8,11 +8,10 @@ class ChatAppBar extends StatelessWidget  implements PreferredSizeWidget {
 
 
   final double height = 100;
-  late  User user;
+  //late  User _user;
+  String _login;
 
-  ChatAppBar(User user){
-    this.user=user;
-  }
+  ChatAppBar(this._login);
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +56,8 @@ class ChatAppBar extends StatelessWidget  implements PreferredSizeWidget {
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: <Widget>[
-                                                  Text(user.firstName, style: textHeading),
-                                                  Text('@adityagurjar', style: textStyle)
+                                                  Text('Имя Фамилия', style: textHeading),
+                                                  Text('@${_login}', style: textStyle)
                                                 ],
                                               ))),
                                     ],
@@ -100,7 +99,7 @@ class ChatAppBar extends StatelessWidget  implements PreferredSizeWidget {
                               child: CircleAvatar(
                                 radius: (80 - (width * .06)) / 2,
                                 backgroundImage: Image.asset(
-                                    user.avatar.toString(),
+                                    '',
 
                                 ).image,
                               )))),

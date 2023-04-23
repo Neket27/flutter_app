@@ -11,10 +11,9 @@ import 'package:flutter/services.dart' show rootBundle;
 
 
 class Home extends StatefulWidget {
-  String _login;
-  String _password;
+  User _user;
 
-  Home(this._login,this._password);
+  Home(this._user);
 
   @override
   State<Home> createState() => _HomeState();
@@ -172,7 +171,7 @@ class _HomeState extends State<Home> {
   Future<void> _screenMassege(BuildContext context) async {
     var response = await http.post(Uri.http('195.19.114.66:8888'),
         headers: {'Accept':'application/json'},
-        body: "{\"RequestType\":\"GetDialogsList\",\"Login\":\"${widget._login}\",\"Password\": \"${widget._password}\"}"
+        body: "{\"RequestType\":\"GetDialogsList\",\"Login\":\"${widget._user.username}\",\"Password\": \"${widget._user.password}\"}"
     );
     print(response.body);
     //Коды ответа: 200 успех,400 неправильно составлен запрос, 418 неправильный логин/пароль
@@ -204,7 +203,7 @@ class _HomeState extends State<Home> {
                           width: 400,
                           child: ListView.builder(
                             itemBuilder: (BuildContext context, int index) {
-                              return MessageWithPeople(Logins[index],Unread[index]);
+                                return MessageWithPeople(widget._user,Logins[index],Unread[index]);
                             },
                             itemCount: Logins.length,
                           ),

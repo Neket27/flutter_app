@@ -8,11 +8,10 @@ import '../people/messageWithPeoples.dart';
 
 
 class ConversationPage  extends StatelessWidget  {
-  late  User user;
+  User _user;
+  String _login;
 
-  ConversationPage(User user){
-    this.user=user;
-  }
+  ConversationPage(this._user, this._login);
 
 //   @override
 //   _ConversationPageState createState() => _ConversationPageState();
@@ -26,7 +25,7 @@ class ConversationPage  extends StatelessWidget  {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            appBar: ChatAppBar(user), // Custom app bar for chat screen
+            appBar: ChatAppBar(_login), // Custom app bar for chat screen
             body: Stack(children: <Widget>[
               Column(
                 children: <Widget>[
