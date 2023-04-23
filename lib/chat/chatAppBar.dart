@@ -96,12 +96,9 @@ class ChatAppBar extends StatelessWidget  implements PreferredSizeWidget {
                       flex: 3,
                       child: Container(
                           child: Center(
-                              child: CircleAvatar(
+                              child: CircleAvatar(//TODO: добавил скачку авы надо бы меню где ее поставить можно
                                 radius: (80 - (width * .06)) / 2,
-                                backgroundImage: Image.asset(
-                                    '',
-
-                                ).image,
+                                backgroundImage: Image.network('http://195.19.114.66:8888?RequestData=Avatar&Login=${_login}').image,
                               )))),
                 ]))));
   }

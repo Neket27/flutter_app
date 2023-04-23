@@ -72,7 +72,7 @@ class InputWidget extends StatelessWidget {
       print(textEditingController.text);//TODO ошибка, хз почему не выдает текст
       var response = await http.post(Uri.http('195.19.114.66:8888'),
           body: '{"RequestType":"SendMessage","Login":"${_user.username}","Password": "${_user.password}","LoginRcv":"${_RcvLogin}","Message": "${textEditingController.text}"}'
-      );//TODO: свой логин пароль и собеседник
+      );
       print('Ответ');
       //print(response.body.toString());
 

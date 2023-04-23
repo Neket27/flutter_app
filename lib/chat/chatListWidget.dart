@@ -85,16 +85,21 @@ class ChatListWidget extends StatefulWidget{
   @override
   Widget build(BuildContext context) {
     print('messages='+widget._messages[0].Login);
-    return Flexible(
-        child: ListView.builder(
-          padding: EdgeInsets.all(10.0),
-          itemBuilder: (context, index) => ChatItemWidget(index,widget._user,widget._messages),
-          itemCount: widget._messages.length,
-          reverse: true,
-          controller: widget.listScrollController,
-        )
+   // if(widget._messages.length!=0) {
+      return Flexible(
+          child: ListView.builder(
+            padding: EdgeInsets.all(10.0),
+            itemBuilder: (context, index) =>
+                ChatItemWidget(index, widget._user, widget._messages),
+            itemCount: widget._messages.length,
+            reverse: true,
+            controller: widget.listScrollController,
+          )
 
-    );
+      );
+    //}else{
+   //   return
+    //}
   }
 
 }
