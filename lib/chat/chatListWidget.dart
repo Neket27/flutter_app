@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class ChatListWidget extends StatefulWidget{
 
   ChatMessage chatMessage =ChatMessage(
       Date: "2014-02-11T14:41:17.000Z",
-      Login: "Neket",
+      Login: "admin",
       MessageText: "Dave changed the subject to “Test Chat",
   );
   @override
@@ -45,9 +46,14 @@ class ChatListWidget extends StatefulWidget{
   void initState() {
     super.initState();
     loadJsonData();
-    widget._messages.add(widget.chatMessage);
+    Timer.periodic(Duration(seconds: 1), (_) {
+      loadJsonData();
+      print('Обновление json');
+    });
+   widget._messages=[];
     getData();
-    print('messages='+widget._messages[0].Login);
+   // print('messages='+widget._messages[0].Login);
+
   }
 
   Future<String> getData() async {
@@ -78,13 +84,17 @@ class ChatListWidget extends StatefulWidget{
     List<dynamic> data = jsonResponse['Messages'];
     setState(() {
       widget._messages = data.map((dynamic item) => ChatMessage.fromJson(item)).toList();
+     // widget._messages.add(widget.chatMessage);
     });
   }
 
 
   @override
   Widget build(BuildContext context) {
-    print('messages='+widget._messages[0].Login);
+    Timer.periodic(Duration(seconds: 1), (_) {
+
+    });
+    //print('messages2='+widget._messages[0].Login);
    // if(widget._messages.length!=0) {
       return Flexible(
           child: ListView.builder(

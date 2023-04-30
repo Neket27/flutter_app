@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:project_app/chat/chatListWidget.dart';
 import '../Palette.dart';
 import '../models/chatMessage.dart';
 import 'package:http/http.dart' as http;
@@ -9,12 +12,14 @@ import '../models/user.dart';
 class ChatItemWidget extends StatelessWidget{
   int index;
   User _user;
-  List<ChatMessage> messages;
+  List<ChatMessage> messages=[];
 
   ChatItemWidget(this.index,this._user,this.messages);
 
+
   @override
   Widget build(BuildContext context) {
+
 //  print('this='+messages[index].user);
     if (messages[index].Login==_user.username) {
       //This is the sent message. We'll later use data from firebase instead of index to determine the message is sent or received.

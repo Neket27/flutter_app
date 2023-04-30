@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:project_app/chat/chatListWidget.dart';
 import '../Palette.dart';
 import '../models/user.dart';
 
@@ -67,7 +68,6 @@ class InputWidget extends StatelessWidget {
   }
 
   Future<void> _sendMessage() async {
-    textEditingController.clear();
     try {
       print(textEditingController.text);//TODO ошибка, хз почему не выдает текст
       var response = await http.post(Uri.http('195.19.114.66:8888'),
@@ -79,5 +79,7 @@ class InputWidget extends StatelessWidget {
     } catch (error) {
       print("EERROR: $error");
     }
+    textEditingController.clear();
+
   }
 }

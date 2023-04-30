@@ -20,6 +20,9 @@ class Input extends StatelessWidget {
     _context = context;
     return new MaterialApp(
       home: new Scaffold(
+        appBar: AppBar(
+          title: Center(child: Text('Авторизация'),),
+        ),
         body: new Center(
           child: new Form(
               key: formKey,
