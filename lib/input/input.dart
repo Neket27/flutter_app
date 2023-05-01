@@ -32,7 +32,7 @@ class Input extends StatelessWidget {
                   new Container(
                     child: new TextFormField(
                       decoration: new InputDecoration(labelText: "Вход"),
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.text,
                       maxLines: 1,
                       style: _sizeTextBlack,
                       onSaved: (val) => _login = val!,

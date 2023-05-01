@@ -1,10 +1,16 @@
  import 'package:flutter/material.dart';
 import 'package:project_app/input/input.dart';
+import 'package:project_app/menuLeft/changingUserData.dart';
 
 import '../home/home.dart';
+import '../models/user.dart';
 
 
 class PanelMenu extends StatefulWidget{
+  User _user;
+
+  PanelMenu(this._user, {super.key});
+
   @override
   State<PanelMenu> createState() {
     return new _PanelState();
@@ -28,16 +34,16 @@ class _PanelState extends State<PanelMenu>{
             padding: EdgeInsets.zero,
             child: UserAccountsDrawerHeader (
               decoration: BoxDecoration(color: Colors.deepPurpleAccent),
-              accountName: Text('Мистер Твистер'),
-              accountEmail: Text("home@dartflutter.ru"),
+              accountName: Text(widget._user.firstName!+' '+widget._user.lastName!),
+              accountEmail: Text("@"+widget._user.username),
               currentAccountPicture:
-              CircleAvatar(backgroundImage: AssetImage('assets/I.jpg'), radius: 30,),
+              CircleAvatar(backgroundImage: AssetImage(widget._user.avatar!), radius: 30,),
             ),
           ),
           new ListTile(
               title: new Text("О себе"),
               leading: Icon(Icons.account_box),
-              onTap: (){}
+              onTap: (){_screenChangingUserData();}
           ),
           new ListTile(
               title: new Text("Выйти"),
@@ -55,41 +61,18 @@ class _PanelState extends State<PanelMenu>{
             builder: (context) => new Input()));
   }
 
+
+
+
+
+  void _screenChangingUserData() {
+    Navigator.push(
+        _context,
+        new MaterialPageRoute(
+            builder: (context) => new ChangingUserData()));
+  }
+
+
+
 }
 
-// abstract class menu extends StatelessWidget{
-//
-//
-//   Drawer(
-//   child: new ListView(
-//   children: <Widget>[
-//   new DrawerHeader(
-//   margin: EdgeInsets.zero,
-//   padding: EdgeInsets.zero,
-//   child: UserAccountsDrawerHeader (
-//   decoration: BoxDecoration(color: Colors.green),
-//   accountName: Text('Мистер Твистер'),
-//   accountEmail: Text("home@dartflutter.ru"),
-//   currentAccountPicture: Container(
-//   decoration: BoxDecoration(
-//   shape: BoxShape.rectangle,
-//   color: Colors.red,
-//   )
-//   ),
-//   ),
-//   ),
-//   new ListTile(
-//   title: new Text("О себе"),
-//   leading: Icon(Icons.account_box),
-//   onTap: (){}
-//   ),
-//   new ListTile(
-//   title: new Text("Настройки"),
-//   leading: Icon(Icons.settings),
-//   onTap: (){}
-//   )
-//   ],
-//   ),
-//
-//   );
-// }

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'home/home.dart';
 import 'input/input.dart';
+import 'models/user.dart';
 
 void main() {
+  User r=User(username: 'lololo', password: '123456', firstName: 'nik',lastName: 'k', online: true, avatar: '');
   runApp(MaterialApp(
-    home: Input(),
+
+    home: Home(r),
   ));
 }
 

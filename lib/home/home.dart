@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
             toolbarHeight: 25,
           ),
           key: _globalKeyMenuPerson,
-          drawer: PanelMenu(),
+          drawer: PanelMenu(widget._user),
 
           body: SafeArea(
             child: Padding(padding: EdgeInsets.all(20),
