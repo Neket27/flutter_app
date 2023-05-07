@@ -47,8 +47,7 @@ class ChatItemWidget extends StatelessWidget{
                 children: <Widget>[
                   Container(
                     child: Text(
-                      DateFormat('dd MMM kk:mm')
-                          .format(DateTime.now()),
+                      messages[index].Date,
                       style: TextStyle(
                           color: Palette.greyColor,
                           fontSize: 12.0,
@@ -80,8 +79,7 @@ class ChatItemWidget extends StatelessWidget{
             ),
             Container(
               child: Text(
-                DateFormat('dd MMM kk:mm')
-                    .format(DateTime.now()),
+                messages[index].Date,
                 style: TextStyle(
                     color: Palette.greyColor,
                     fontSize: 12.0,

@@ -84,7 +84,7 @@ class ChatListWidget extends StatefulWidget{
     List<dynamic> data = jsonResponse['Messages'];
     setState(() {
       widget._messages = data.map((dynamic item) => ChatMessage.fromJson(item)).toList();
-     // widget._messages.add(widget.chatMessage);
+      // widget._messages.add(widget.chatMessage);
     });
   }
 
