@@ -10,13 +10,15 @@ import '../models/user.dart';
 
 class ChangingUserData extends StatelessWidget {
 
-  late String _login;
-  late String _password;
   final _sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
   final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
   final formKey = new GlobalKey<FormState>();
   String textButtonUpdate ='Применить изменения';
-
+  late String _newPass;
+  late String _firstName;
+  late String _lastName;
+  User _user;
+  ChangingUserData(this._user);
   @override
   setState(){
 
@@ -42,7 +44,7 @@ class ChangingUserData extends StatelessWidget {
                       keyboardType: TextInputType.name,
                       maxLines: 1,
                       style: _sizeTextBlack,
-                      onSaved: (val) => _login = val!,
+                      onSaved: (val) => _firstName = val!,
                       // validator: (val) =>
                       //     !val!.contains("@") ? 'Not a valid email.' : null,
                     ),
@@ -54,7 +56,7 @@ class ChangingUserData extends StatelessWidget {
                       keyboardType: TextInputType.name,
                       maxLines: 1,
                       style: _sizeTextBlack,
-                      onSaved: (val) => _login = val!,
+                      onSaved: (val) => _lastName = val!,
                       // validator: (val) =>
                       //     !val!.contains("@") ? 'Not a valid email.' : null,
                     ),
@@ -67,7 +69,7 @@ class ChangingUserData extends StatelessWidget {
                       maxLines: 1,
                       validator: (val) =>
                       val!.length < 6 ? 'Короткий пароль.' : null,
-                      onSaved: (val) => _password = val!,
+                      onSaved: (val) => _newPass = val!,
                       style: _sizeTextBlack,
                     ),
                     width: 400.0,
@@ -93,17 +95,28 @@ class ChangingUserData extends StatelessWidget {
     );
   }
 
-  void UpdateDataUser() {
+  void UpdateDataUser() async{
     final form = formKey.currentState;
     if (form!.validate()) {
       form.save();
-
-      setState() {
-        textButtonUpdate = 'Данные изменены';
-        print('изменение');
-        // Timer.periodic(Duration(seconds: 5), (_) {
-        //   textButtonUpdate = 'Применить';
-        // });
+      var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
+          body:  '{"RequestType":"UpdateUserInfo","Login":"${_user.username}","Password":"${_user.password}","NewPassword": "${_newPass}","NewFstName": "${_firstName}","NewLstName": "${_lastName}"}'
+      );
+      // 200 - успех 418 неправильный логин или пароль остальное чет не так с запросом
+      print(response.statusCode);
+      if(response.statusCode==200) {
+        //TODO крч тут обновляем данные нашего юзера на устройстве, мне он чет не дает структуру менять
+      //  _user=
+      //  _user.password=_newPass;
+        //_user.firstName=_firstName;
+       // _user.lastName=_lastName;
+        setState() {
+          textButtonUpdate = 'Данные изменены';
+          print('изменение');
+          // Timer.periodic(Duration(seconds: 5), (_) {
+          //   textButtonUpdate = 'Применить';
+          // });
+        }
       }
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
 
 import '../home/home.dart';
 import 'package:http/http.dart' as http;
@@ -112,11 +113,14 @@ class Input extends StatelessWidget {
     if(response.statusCode==200) {
       print('STATE=OK ${_login} ${_password}');
       hideKeyboard();
+      var response =await  http.get(Uri.parse("http://195.19.114.66:8888/?RequestData=UserInfo&Login=${_login}" ));
+      Map<String, dynamic> user = jsonDecode(response.body);
+      print (user['FirstName']);
       Navigator.push(
           _context,
           new MaterialPageRoute(
               builder: (context) {
-                return new Home(new User(username: _login,password: _password, online: true));
+                return new Home(new User(username: _login,password: _password,firstName: user['FirstName'],lastName:user['LastName']));
               }
           ));
     }else if(response.statusCode==418){
@@ -156,7 +160,7 @@ class Input extends StatelessWidget {
           _context,
           new MaterialPageRoute(
               builder: (context) {
-                return new Home(new User(username: _login,password: _password, online: true));
+                return new Home(new User(username: _login,password: _password));
               }
           ));
     }

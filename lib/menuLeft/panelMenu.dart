@@ -37,7 +37,7 @@ class _PanelState extends State<PanelMenu>{
               accountName: Text(widget._user.firstName!+' '+widget._user.lastName!),
               accountEmail: Text("@"+widget._user.username),
               currentAccountPicture:
-              CircleAvatar(backgroundImage: AssetImage(widget._user.avatar!), radius: 30,),
+              CircleAvatar(backgroundImage: Image.network('http://195.19.114.66:8888?RequestData=Avatar&Login=${widget._user.username}').image, radius: 30,),
             ),
           ),
           new ListTile(
@@ -69,7 +69,7 @@ class _PanelState extends State<PanelMenu>{
     Navigator.push(
         _context,
         new MaterialPageRoute(
-            builder: (context) => new ChangingUserData()));
+            builder: (context) => new ChangingUserData(widget._user)));
   }
 
 

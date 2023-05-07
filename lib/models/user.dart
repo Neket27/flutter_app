@@ -8,17 +8,12 @@ class User {
   final String password;
   final String? firstName;
   final String? lastName;
-  final bool online;
-  final String? avatar;
 
   User({
     required this.username,
     required this.password,
     this.firstName,
     this.lastName,
-    required this.online,
-    this.avatar,
-
   });
 
 

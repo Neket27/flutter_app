@@ -79,9 +79,7 @@ class _MessageWithPeopleState extends State<MessageWithPeople>{
         username: 'Neket_27',
         password: '555555',
         firstName: 'Neket',
-        lastName: 'lastName',
-        online: true,
-        avatar: '');
+        lastName: 'lastName',);
 
     void postDataUser() async {
       //TODO по смыслу ipшник где нибудь в одном месте хранить
