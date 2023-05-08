@@ -32,7 +32,7 @@ class Input extends StatelessWidget {
                 children: <Widget>[
                   new Container(
                     child: new TextFormField(
-                      decoration: new InputDecoration(labelText: "Вход"),
+                      decoration: new InputDecoration(labelText: "Логин"),
                       keyboardType: TextInputType.text,
                       maxLines: 1,
                       style: _sizeTextBlack,
@@ -44,7 +44,7 @@ class Input extends StatelessWidget {
                   ),
                   new Container(
                     child: new TextFormField(
-                      decoration: new InputDecoration(labelText: "Password"),
+                      decoration: new InputDecoration(labelText: "Пароль"),
                       obscureText: true,
                       maxLines: 1,
                       validator: (val) =>
@@ -160,7 +160,7 @@ class Input extends StatelessWidget {
           _context,
           new MaterialPageRoute(
               builder: (context) {
-                return new Home(new User(username: _login,password: _password));
+                return new Home(new User(username: _login,password: _password,firstName: _login,lastName:""));
               }
           ));
     }

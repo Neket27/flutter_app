@@ -18,21 +18,12 @@ class InputWidget extends StatelessWidget {
     return Container(
       child: Row(
         children: <Widget>[
-          Material(
-            child: new Container(
-              margin: new EdgeInsets.symmetric(horizontal: 1.0),
-              child: new IconButton(
-                icon: new Icon(Icons.face),
-                color: Palette.primaryColor, onPressed: () { },
-              ),
-            ),
-            color: Colors.white,
-          ),
 
           // Text input
           Flexible(
     child: Material(
             child: Container(
+              margin: EdgeInsets.only(left: 10.0),
               child: TextField(
                 style: TextStyle(color: Palette.primaryTextColor, fontSize: 15.0),
                 controller: textEditingController,
@@ -69,13 +60,10 @@ class InputWidget extends StatelessWidget {
 
   Future<void> _sendMessage() async {
     try {
-      print(textEditingController.text);//TODO ошибка, хз почему не выдает текст
+      print(textEditingController.text);
       var response = await http.post(Uri.http('195.19.114.66:8888'),
           body: '{"RequestType":"SendMessage","Login":"${_user.username}","Password": "${_user.password}","LoginRcv":"${_RcvLogin}","Message": "${textEditingController.text}"}'
       );
-      print('Ответ');
-      //print(response.body.toString());
-
     } catch (error) {
       print("EERROR: $error");
     }

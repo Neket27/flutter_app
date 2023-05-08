@@ -41,7 +41,7 @@ class _PanelState extends State<PanelMenu>{
             ),
           ),
           new ListTile(
-              title: new Text("О себе"),
+              title: new Text("Редактировать профиль"),
               leading: Icon(Icons.account_box),
               onTap: (){_screenChangingUserData();}
           ),

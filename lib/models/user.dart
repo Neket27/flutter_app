@@ -6,14 +6,14 @@ part 'user.g.dart';
 class User {
   final String username;
   final String password;
-  final String? firstName;
-  final String? lastName;
+  final String firstName;
+  final String lastName;
 
   User({
     required this.username,
     required this.password,
-    this.firstName,
-    this.lastName,
+    required this.firstName,
+    required this.lastName,
   });
 
 

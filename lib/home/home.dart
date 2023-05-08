@@ -20,31 +20,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-  String jsonString = '{"users":[{"id": 1,"username": "SammyShark","firstName": "Marcel","lastName": "Jones","maidenName": "Smith","online":true},{"id": 2,"username": "JesseOctopus","firstName": "Assunta","lastName": "Rath","maidenName": "Heller","online": false},{"id": 3,"username": "DrewSquid","firstName": "Enoch","lastName": "Lynch","maidenName": "Heidenreich","online": false}]}';
-
-// String response =  rootBundle.loadString(jsonString) as String;
-
-//   Future<String> getJsonDate() {
-//     return rootBundle.loadString('jsons/test.json');
-//   }
-//
-//   User getJson() {
-//     var r= rootBundle.loadString('jsons/test.json');
-//     Map<String, dynamic> userMap = jsonDecode(r as String);
-//     var user = User.fromJson(userMap);
-//     return user;
-//   }
-//
-// Future<User> getJson2() async {
-//   String response = await rootBundle.loadString('jsons/test.json');
-//   Map<String, dynamic> userMap = jsonDecode(response);
-//   var user = User.fromJson(userMap);
-
-//  return user;
-//}
-
-/////////////////////////////////
   final GlobalKey<ScaffoldState> _globalKeyMenuPerson = GlobalKey();
 
   @override
@@ -131,42 +106,6 @@ class _HomeState extends State<Home> {
     );
   }
 
-  //String jsonString = '{"users": [{"name": "John", "age": 30}, {"name": "Jane", "age": 25}]}';
-
-  // Future<String> loadJsonFromAsset() async {
-  //   return await rootBundle.loadString('assets/users.json');
-  // }
-
-  Future<UserList> fetchUserList() async {
-    //final jsonString = await loadJsonFromAsset();
-    final jsonResponse = json.decode(jsonString);
-    final userList = UserList.fromJson(jsonResponse);
-    return userList;
-  }
-
-  // getDataFromJson(){
-  //
-  //   Map<String, dynamic> data = json.decode(jsonString);
-  //
-  //   List<dynamic> users = data['users'];
-  //   for (var user in users) {
-  //     String name = user['name'];
-  //     int age = user['age'];
-  //     // do something with name and age
-  //   }
-  // }
-
-// Future<List<User>> getDataFromFakeServer()async{
-//   return await Future.delayed(Duration(seconds: 2),(){
-//     List<dynamic> data = jsonDecode(jsonString);
-//     List<User> users = data.map((data) => User.fromJson(data)).toString();
-//     List<User> imagesList = jsonString.map((i) => Image.fromJson(i)).toList();
-//     return users;
-//   });
-// }
-
-
-
 
   Future<void> _screenMassege(BuildContext context) async {
     var response = await http.post(Uri.http('195.19.114.66:8888'),
@@ -176,11 +115,8 @@ class _HomeState extends State<Home> {
     print(response.body);
     //Коды ответа: 200 успех,400 неправильно составлен запрос, 418 неправильный логин/пароль
     if(response.statusCode==200) {
-      Map<String, dynamic> jsonmp=jsonDecode(response.body);
-      List dynamiclist = jsonmp['Logins'];
-      List<String> Logins = dynamiclist.cast<String>();
-      dynamiclist = jsonmp['Unread'];
-      final List<int> Unread=dynamiclist.cast<int>();
+      final jsonResponse = json.decode(response.body);
+      List<dynamic> data = jsonResponse['Dialogs'];
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) =>
             Scaffold(
@@ -203,9 +139,9 @@ class _HomeState extends State<Home> {
                           width: 400,
                           child: ListView.builder(
                             itemBuilder: (BuildContext context, int index) {
-                                return MessageWithPeople(widget._user,Logins[index],Unread[index]);
+                                return MessageWithPeople(widget._user,new User(username: (data[index])['Login'],password: "",firstName: (data[index])['FirstName'],lastName:(data[index])['LastName']),(data[index])['Unread']);
                             },
-                            itemCount: Logins.length,
+                            itemCount: data.length,
                           ),
                         ),
                       ),

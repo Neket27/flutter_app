@@ -20,7 +20,6 @@ class ChatItemWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-//  print('this='+messages[index].user);
     if (messages[index].Login==_user.username) {
       //This is the sent message. We'll later use data from firebase instead of index to determine the message is sent or received.
       return Container(

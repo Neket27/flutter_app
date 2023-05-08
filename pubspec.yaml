@@ -46,7 +46,3 @@ flutter:
   assets:
     - assets/I.jpg
     - assets/dima.jpg
-    - jsons/users.json
-    - jsons/test.json
-    - jsons/message.json
-

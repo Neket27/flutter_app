@@ -8,33 +8,21 @@ import '../people/messageWithPeoples.dart';
 
 
 class ConversationPage  extends StatelessWidget  {
-  User _user;
-  String _login;
+  User _userMe;
+  User _userRm;
 
-  ConversationPage(this._user, this._login);
-
-//   @override
-//   _ConversationPageState createState() => _ConversationPageState();
-// }
-//
-// class _ConversationPageState extends State<ConversationPage> {
-//
-
-
-
-
-
+  ConversationPage(this._userMe, this._userRm);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            appBar: ChatAppBar(_login), // Custom app bar for chat screen
+            appBar: ChatAppBar(_userRm), // Custom app bar for chat screen
             body: Stack(children: <Widget>[
               Column(
                 children: <Widget>[
-                  ChatListWidget(_user,_login),//Chat list
-                  InputWidget(_user,_login) // The input widget
+                  ChatListWidget(_userMe,_userRm.username),//Chat list
+                  InputWidget(_userMe,_userRm.username) // The input widget
                 ],
               ),
             ]
