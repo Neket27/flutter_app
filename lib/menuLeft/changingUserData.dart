@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:file_picker/file_picker.dart';
 import '../home/home.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,10 +23,11 @@ class ChangingUserData extends StatelessWidget {
   setState(){
 
   }
+  late BuildContext _context;
 
   @override
   Widget build(BuildContext context) {
-
+  _context=context;
     return new MaterialApp(
       home: new Scaffold(
         appBar: AppBar(
@@ -88,13 +89,58 @@ class ChangingUserData extends StatelessWidget {
                       ),
                     ),
                   ),
+                  new Padding(
+                    padding: new EdgeInsets.only(top: 25.0),
+                    child: new MaterialButton(
+                      onPressed: UploadAvatar,
+                      color: Theme.of(context).accentColor,
+                      height: 50.0,
+                      minWidth: 150.0,
+                      child: new Text(
+                        "Загрузить аватар",
+                        style: _sizeTextWhite,
+                      ),
+                    ),
+                  )
                 ],
               )),
         ),
       ),
     );
   }
-
+  void UploadAvatar() async{
+    var request = http.MultipartRequest("POST", Uri.http('195.19.114.66:8888', 'whatsit/create'));
+    request.fields["Login"] = _user.username;
+    request.fields["Password"] = _user.password;
+    FilePickerResult? res = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+    );
+    if (res != null) {
+      var pic = await http.MultipartFile.fromPath(
+          "Avatar", res.files.single.path.toString());
+      request.files.add(pic);
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        showDialog(
+          context: _context,
+          builder: (_) =>
+              AlertDialog(
+                title: Text(""),
+                content: Text('Аватар успешно загружен'),
+              ),
+        );
+      } else {
+        showDialog(
+          context: _context,
+          builder: (_) =>
+              AlertDialog(
+                title: Text(""),
+                content: Text('Ошибка'),
+              ),
+        );
+      }
+    }
+  }
   void UpdateDataUser() async{
     final form = formKey.currentState;
     if (form!.validate()) {

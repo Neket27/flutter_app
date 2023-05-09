@@ -5,10 +5,8 @@ import 'input/input.dart';
 import 'models/user.dart';
 
 void main() {
-  User r=User(username: 'lololo', password: '123456', firstName: 'nik',lastName: 'k', );
   runApp(MaterialApp(
-
-    home: Home(r),
+    home:Input(),
   ));
 }
 
