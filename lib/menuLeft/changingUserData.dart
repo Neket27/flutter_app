@@ -109,6 +109,7 @@ class ChangingUserData extends StatelessWidget {
     );
   }
   void UploadAvatar() async{
+
     var request = http.MultipartRequest("POST", Uri.http('195.19.114.66:8888', 'whatsit/create'));
     request.fields["Login"] = _user.username;
     request.fields["Password"] = _user.password;
