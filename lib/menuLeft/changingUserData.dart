@@ -8,22 +8,41 @@ import 'package:http/http.dart' as http;
 
 import '../models/user.dart';
 
-class ChangingUserData extends StatelessWidget {
+class ChangingUserData extends StatefulWidget {
 
-  final _sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
-  final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
-  final formKey = new GlobalKey<FormState>();
-  String textButtonUpdate ='Применить изменения';
-  late String _newPass;
-  late String _firstName;
-  late String _lastName;
   User _user;
-  ChangingUserData(this._user);
-  @override
-  setState(){
 
-  }
+  ChangingUserData(this._user);
+
+  @override
+  _ChangingUserDataState createState() => new _ChangingUserDataState();
+
+}
+
+  class _ChangingUserDataState extends State<ChangingUserData> {
+    final _sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
+    final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
+    final formKey = new GlobalKey<FormState>();
+
+    String textButtonUpdate = 'Применить изменения';
+    late String _newPass;
+    late String _firstName;
+    late String _lastName;
+  late TextEditingController _c ;
+
   late BuildContext _context;
+
+    @override
+    void initState() {
+      _c = new TextEditingController();
+      super.initState();
+    }
+
+    @override
+    void dispose(){
+      _c?.dispose();
+      super.dispose();
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -111,8 +130,8 @@ class ChangingUserData extends StatelessWidget {
   void UploadAvatar() async{
 
     var request = http.MultipartRequest("POST", Uri.http('195.19.114.66:8888', 'whatsit/create'));
-    request.fields["Login"] = _user.username;
-    request.fields["Password"] = _user.password;
+    request.fields["Login"] = widget._user.username;
+    request.fields["Password"] = widget._user.password;
     FilePickerResult? res = await FilePicker.platform.pickFiles(
       type: FileType.image,
     );
@@ -147,7 +166,7 @@ class ChangingUserData extends StatelessWidget {
     if (form!.validate()) {
       form.save();
       var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
-          body:  '{"RequestType":"UpdateUserInfo","Login":"${_user.username}","Password":"${_user.password}","NewPassword": "${_newPass}","NewFstName": "${_firstName}","NewLstName": "${_lastName}"}'
+          body:  '{"RequestType":"UpdateUserInfo","Login":"${widget._user.username}","Password":"${widget._user.password}","NewPassword": "${_newPass}","NewFstName": "${_firstName}","NewLstName": "${_lastName}"}'
       );
       // 200 - успех 418 неправильный логин или пароль остальное чет не так с запросом
       print(response.statusCode);
@@ -157,13 +176,14 @@ class ChangingUserData extends StatelessWidget {
       //  _user.password=_newPass;
         //_user.firstName=_firstName;
        // _user.lastName=_lastName;
-        setState() {
+        setState((){
           textButtonUpdate = 'Данные изменены';
-          print('изменение');
-          // Timer.periodic(Duration(seconds: 5), (_) {
-          //   textButtonUpdate = 'Применить';
-          // });
-        }
+          Timer.periodic(Duration(seconds: 8), (_) {
+            setState(() {
+              textButtonUpdate = 'Применить изменения';
+            });
+          });
+        });
       }
     }
   }

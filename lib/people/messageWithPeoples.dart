@@ -1,11 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../convertor/conversationPage.dart';
 import '../models/user.dart';
-import 'package:http/http.dart' as http;
 
 
 class MessageWithPeople  extends StatefulWidget{
@@ -41,12 +39,13 @@ class _MessageWithPeopleState extends State<MessageWithPeople>{
 
     setState(() {
       _users = data.map((dynamic item) => User.fromJson(item)).toList();
+
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
+print('NIK=${widget._user.username}');
     return
       Padding(
         padding: EdgeInsets.only(left: 10, top: 10, right: 10),

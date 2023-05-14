@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
-import 'home/home.dart';
 import 'input/input.dart';
 import 'models/user.dart';
 
 void main() {
+  User r = User(username: 'Nikita', password: '090909', firstName: 'Nikita', lastName: 'Kulga');
   runApp(MaterialApp(
-    home:Input(),
+    home: Input(),
   ));
 }
 

@@ -2,9 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+
 import '../models/chatMessage.dart';
 import '../models/user.dart';
 import 'chatItemWidget.dart';
@@ -31,7 +30,7 @@ class ChatListWidget extends StatefulWidget{
   @override
   void initState() {
     super.initState();
-    widget._messages=[];
+
     getData();
     Timer.periodic(Duration(seconds: 1), (_) {
       getData();
@@ -58,6 +57,9 @@ class ChatListWidget extends StatefulWidget{
 
   @override
   Widget build(BuildContext context) {
+    ChatMessage m = ChatMessage(Date: '15,06,99', Login: 'Nik', MessageText: 'MessageText');
+    widget._messages.add(m);
+    print('countMessage=${widget._messages.length.toString()}');
       return Flexible(
           child: ListView.builder(
             padding: EdgeInsets.all(10.0),

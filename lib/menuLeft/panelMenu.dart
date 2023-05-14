@@ -61,18 +61,11 @@ class _PanelState extends State<PanelMenu>{
             builder: (context) => new Input()));
   }
 
-
-
-
-
   void _screenChangingUserData() {
     Navigator.push(
         _context,
         new MaterialPageRoute(
             builder: (context) => new ChangingUserData(widget._user)));
   }
-
-
-
 }
 
