@@ -11,8 +11,9 @@ import 'windowSearchUser.dart';
 
 class Home extends StatefulWidget {
   User _user;
+  List<dynamic>? data ;
 
-  Home(this._user);
+  Home(this._user,this.data);
 
   @override
   State<Home> createState() => _HomeState();
@@ -20,8 +21,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _globalKeyMenuPerson = GlobalKey();
-  List<dynamic>? data = [];
-
   @override
   void setState(VoidCallback fn) {
     getData();
@@ -43,16 +42,16 @@ class _HomeState extends State<Home> {
     //Коды ответа: 200 успех,400 неправильно составлен запрос, 418 неправильный логин/пароль
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      data = jsonResponse['Dialogs'];
+      widget.data = jsonResponse['Dialogs'];
     }
-    print("DATA_Dialogs=${data?.length}");
+    print("DATA_Dialogs=${widget.data?.length}");
   }
 
   @override
   Widget build(BuildContext context) {
-    getData();
+   // getData();
 
-    print('lengchDATA=${data?.length}');
+    print('lengchDATA=${widget.data?.length}');
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -101,9 +100,9 @@ class _HomeState extends State<Home> {
                           width: 400,
                           child: ListView.builder(
                             itemBuilder: (BuildContext context, int index) {
-                              return MessageWithPeople(widget._user,User(username: (data?[index])['Login'],password: "",firstName: (data?[index])['FirstName'],lastName:(data?[index])['LastName']),(data?[index])['Unread']);
+                              return MessageWithPeople(widget._user,User(username: (widget.data?[index])['Login'],password: "",firstName: (widget.data?[index])['FirstName'],lastName:(widget.data?[index])['LastName']),(widget.data?[index])['Unread']);
                             },
-                            itemCount: data?.length,
+                            itemCount: widget.data?.length,
                           ),
                         ),
                       ),
