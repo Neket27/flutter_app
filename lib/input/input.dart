@@ -116,11 +116,17 @@ class Input extends StatelessWidget {
       var response =await  http.get(Uri.parse("http://195.19.114.66:8888/?RequestData=UserInfo&Login=${_login}" ));
       Map<String, dynamic> user = jsonDecode(response.body);
       print (user['FirstName']);
+       response = await http.post(Uri.http('195.19.114.66:8888'),
+          headers: {'Accept': 'application/json'},
+          body:
+          "{\"RequestType\":\"GetDialogsList\",\"Login\":\"${_login}\",\"Password\": \"${_password}\"}");
+        final jsonResponse = json.decode(response.body);
+        print (jsonResponse['Dialogs']);
       Navigator.push(
           _context,
           new MaterialPageRoute(
               builder: (context) {
-                return new Home(new User(username: _login,password: _password,firstName: user['FirstName'],lastName:user['LastName']));
+                return new Home(new User(username: _login,password: _password,firstName: user['FirstName'],lastName:user['LastName']),jsonResponse['Dialogs']);
               }
           ));
     }else if(response.statusCode==418){
@@ -160,7 +166,7 @@ class Input extends StatelessWidget {
           _context,
           new MaterialPageRoute(
               builder: (context) {
-                return new Home(new User(username: _login,password: _password,firstName: _login,lastName:""));
+                return new Home(new User(username: _login,password: _password,firstName: _login,lastName:""),[]);
               }
           ));
     }
