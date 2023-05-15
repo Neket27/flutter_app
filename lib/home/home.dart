@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_app/menuLeft/panelMenu.dart';
 import 'package:project_app/models/user.dart';
-import 'package:project_app/home/SearchUser.dart';
 
+import '../people/messageWithPeoples.dart';
+import 'SearchUser.dart';
 import 'windowSearchUser.dart';
 
 class Home extends StatefulWidget {
@@ -55,51 +56,64 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(''),
+        title:    Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              onTap: () =>
+                  _globalKeyMenuPerson.currentState!.openDrawer(),
+              child: Icon(Icons.menu),
+            ),
+            //  IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back_ios_new_rounded),),
+            Text(
+              'Переписки',
+            ),
+            IconButton(
+              onPressed: () {
+                // method to show the search bar
+                showSearch(
+                    context: context,
+                    // delegate to customize the search bar
+                    delegate: SearchUser(widget._user)
+                );
+              },
+              icon: const Icon(Icons.search),
+            )
+          ],
+        ),
         centerTitle: true,
         backgroundColor: Colors.deepPurpleAccent,
-        toolbarHeight: 25,
+        toolbarHeight: 35,
       ),
       key: _globalKeyMenuPerson,
       drawer: PanelMenu(widget._user),
-      body: Container(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () =>
-                        _globalKeyMenuPerson.currentState!.openDrawer(),
-                    child: Icon(Icons.arrow_back_ios),
+      body:
+            Scaffold(
+              body: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                home: Scaffold(
+                  backgroundColor: Color.fromRGBO(254, 240, 220, 10),
+                  body: SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10, top: 1, right: 10),
+                      child: Container(
+                        child: Drawer(
+                          width: 400,
+                          child: ListView.builder(
+                            itemBuilder: (BuildContext context, int index) {
+                              return MessageWithPeople(widget._user,User(username: (data?[index])['Login'],password: "",firstName: (data?[index])['FirstName'],lastName:(data?[index])['LastName']),(data?[index])['Unread']);
+                            },
+                            itemCount: data?.length,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  //  IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back_ios_new_rounded),),
-                  Text(
-                    'Переписки',
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        showSearch(
-                            context: context,
-                            // delegate to customize the search bar
-                            delegate: SearchUser()
-                        );
-                      //  Navigator.of(context).push(MaterialPageRoute(
-                      //      builder: (context) => windowSearchUser()));
-                      },
-                      icon: Icon(
-                        Icons.search_rounded,
-                        size: 30,
-                      )),
-                ],
+                ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
+
+
     );
   }
 }

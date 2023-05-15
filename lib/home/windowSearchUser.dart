@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_app/home/SearchUser.dart';
+import 'package:project_app/models/user.dart';
 
 class windowSearchUser extends StatefulWidget {
-  const windowSearchUser({Key? key}) : super(key: key);
+
+  User _user;
+
+  windowSearchUser(this._user);
 
   @override
   State<windowSearchUser> createState() => _windowSearchUserState();
@@ -25,7 +29,7 @@ class _windowSearchUserState extends State<windowSearchUser> {
               showSearch(
                   context: context,
                   // delegate to customize the search bar
-                  delegate: SearchUser()
+                  delegate: SearchUser(widget._user)
               );
             },
             icon: const Icon(Icons.search),
