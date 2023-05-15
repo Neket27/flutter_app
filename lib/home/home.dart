@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -22,15 +23,20 @@ class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _globalKeyMenuPerson = GlobalKey();
   List<dynamic>? data = [];
 
-  @override
-  void setState(VoidCallback fn) {
-    getData();
+@override
+void setState(VoidCallback fn) {
     super.setState(fn);
   }
 
   @override
   initState() {
-    getData();
+    Timer.periodic(Duration(seconds: 2), (_) {
+      setState(() {
+        getData();
+        print('Обновление json--');
+      });
+    });
+
     super.initState();
   }
 
@@ -46,11 +52,13 @@ class _HomeState extends State<Home> {
       data = jsonResponse['Dialogs'];
     }
     print("DATA_Dialogs=${data?.length}");
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {
-    getData();
 
     print('lengchDATA=${data?.length}');
     return Scaffold(

@@ -34,7 +34,7 @@ class ChatListWidget extends StatefulWidget{
     getData();
     Timer.periodic(Duration(seconds: 1), (_) {
       getData();
-      print('Обновление json');
+      print('Обновление json диалога');
     });
   }
 
@@ -57,8 +57,6 @@ class ChatListWidget extends StatefulWidget{
 
   @override
   Widget build(BuildContext context) {
-    ChatMessage m = ChatMessage(Date: '15,06,99', Login: 'Nik', MessageText: 'MessageText');
-    widget._messages.add(m);
     print('countMessage=${widget._messages.length.toString()}');
       return Flexible(
           child: ListView.builder(
