@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_app/menuLeft/panelMenu.dart';
 import 'package:project_app/models/user.dart';
+import 'package:project_app/home/SearchUser.dart';
 
 import 'windowSearchUser.dart';
 
@@ -54,7 +55,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Massage'),
+        title: Text(''),
         centerTitle: true,
         backgroundColor: Colors.deepPurpleAccent,
         toolbarHeight: 25,
@@ -81,8 +82,13 @@ class _HomeState extends State<Home> {
                   ),
                   IconButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => windowSearchUser()));
+                        showSearch(
+                            context: context,
+                            // delegate to customize the search bar
+                            delegate: SearchUser()
+                        );
+                      //  Navigator.of(context).push(MaterialPageRoute(
+                      //      builder: (context) => windowSearchUser()));
                       },
                       icon: Icon(
                         Icons.search_rounded,

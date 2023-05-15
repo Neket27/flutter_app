@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:project_app/models/SearchedUser.dart';
 class SearchUser extends SearchDelegate {
   // Demo list to show querying
   List<String> searchTerms = [ // TODO пользователи, которые были найдены по неполному или полному нику
-    "User_Vika",
-    "User_Andrei",
-    "Anton",
-    "Slava",
   ];
-
+ late List<SearchedUser> matchQuery=[];
   // first overwrite to
   // clear the search text
   @override
@@ -37,37 +35,33 @@ class SearchUser extends SearchDelegate {
   // third overwrite to show query result
   @override
   Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var user in searchTerms) {
-      if (user.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(user);
-      }
-    }
+    getData();
     return ListView.builder(
       itemCount: matchQuery.length,
       itemBuilder: (context, index) {
-        var result = matchQuery[index];
+        var result = matchQuery[index].FirstName+" "+matchQuery[index].LastName;
         return ListTile(
           title: Text(result),
         );
       },
     );
   }
-
+ void getData ()async{
+    print(query);
+    var response =await  http.get(Uri.parse("http://195.19.114.66:8888/?RequestData=SearchUser&Querry=${query}" ));
+    final jsonResponse = json.decode(response.body);
+    List<dynamic> q = jsonResponse['Searched'];
+     matchQuery = q.map((dynamic item) => SearchedUser.fromJson(item)).toList();
+  }
   // last overwrite to show the
   // querying process at the runtime
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
-      }
-    }
+   getData();
     return ListView.builder(
       itemCount: matchQuery.length,
       itemBuilder: (context, index) {
-        var result = matchQuery[index];
+        var result = matchQuery[index].FirstName+" "+matchQuery[index].LastName;
         return ListTile(
           title: Text(result),
         );
