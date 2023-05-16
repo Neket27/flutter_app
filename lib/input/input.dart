@@ -126,7 +126,7 @@ class Input extends StatelessWidget {
           _context,
           new MaterialPageRoute(
               builder: (context) {
-                return new Home(new User(username: _login,password: _password,firstName: user['FirstName'],lastName:user['LastName']),jsonResponse['Dialogs']);
+                return Home(new User(username: _login,password: _password,firstName: user['FirstName'],lastName:user['LastName']));
               }
           ));
     }else if(response.statusCode==418){
@@ -166,7 +166,7 @@ class Input extends StatelessWidget {
           _context,
           new MaterialPageRoute(
               builder: (context) {
-                return new Home(new User(username: _login,password: _password,firstName: _login,lastName:""),[]);
+                return new Home(new User(username: _login,password: _password,firstName: _login,lastName:""));
               }
           ));
     }
@@ -190,11 +190,9 @@ class Input extends StatelessWidget {
 
   }
 
-
   void hideKeyboard() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
   }
-
 
 }
 

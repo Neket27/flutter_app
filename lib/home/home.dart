@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -95,10 +96,7 @@ void setState(VoidCallback fn) {
       key: _globalKeyMenuPerson,
       drawer: PanelMenu(widget._user),
       body:
-            Scaffold(
-              body: MaterialApp(
-                debugShowCheckedModeBanner: false,
-                home: Scaffold(
+                Scaffold(
                   backgroundColor: Color.fromRGBO(254, 240, 220, 10),
                   body: SafeArea(
                     child: Padding(
@@ -117,9 +115,6 @@ void setState(VoidCallback fn) {
                     ),
                   ),
                 ),
-              ),
-            ),
-
 
     );
   }
