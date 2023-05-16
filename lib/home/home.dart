@@ -104,9 +104,7 @@ class Home extends StatefulWidget {
       drawer: PanelMenu(widget._user,this),
       body:
             Scaffold(
-              body: MaterialApp(
-                debugShowCheckedModeBanner: false,
-                home: Scaffold(
+
                   backgroundColor: Color.fromRGBO(254, 240, 220, 10),
                   body: SafeArea(
                     child: Padding(
@@ -124,8 +122,7 @@ class Home extends StatefulWidget {
                       ),
                     ),
                   ),
-                ),
-              ),
+
             ),
 
 
