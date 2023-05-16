@@ -12,7 +12,7 @@ class ChatListWidget extends StatefulWidget{
   User _user;
   String _RcvLogin;
   ChatListWidget (this._user,this._RcvLogin);
-
+  late Timer timer;
   final ScrollController listScrollController = new ScrollController();
   late List<ChatMessage> _messages=[];
 
@@ -32,7 +32,7 @@ class ChatListWidget extends StatefulWidget{
     super.initState();
 
     getData();
-    Timer.periodic(Duration(seconds: 1), (_) {
+    widget.timer =Timer.periodic(Duration(seconds: 1), (_) {
       getData();
       print('Обновление json диалога');
     });
@@ -69,5 +69,10 @@ class ChatListWidget extends StatefulWidget{
           )
 
       );
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    widget.timer.cancel();
   }
 }

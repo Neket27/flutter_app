@@ -20,27 +20,11 @@ class MessageWithPeople  extends StatefulWidget{
 }
 
 class _MessageWithPeopleState extends State<MessageWithPeople>{
-  List<User> _users=[];
-  _MessageWithPeopleState(){
-    loadJsonData();
-  }
+
 
   @override
   void initState() {
     super.initState();
-    loadJsonData();
-  }
-
-  Future<void> loadJsonData() async {
-    final jsonString = await rootBundle.loadString('jsons/users.json');
-    final jsonResponse = json.decode(jsonString);
-
-    List<dynamic> data = jsonResponse['users'];
-
-    setState(() {
-      _users = data.map((dynamic item) => User.fromJson(item)).toList();
-
-    });
   }
 
   @override

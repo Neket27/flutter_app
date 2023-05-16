@@ -8,8 +8,8 @@ import '../models/user.dart';
 
 class PanelMenu extends StatefulWidget{
   User _user;
-
-  PanelMenu(this._user, {super.key});
+  HomeState st;
+  PanelMenu(this._user,this.st, {super.key});
 
   @override
   State<PanelMenu> createState() {
@@ -55,6 +55,8 @@ class _PanelState extends State<PanelMenu>{
     );
   }
   void performLogin() {
+    while(Navigator.canPop(_context))
+      Navigator.pop(_context);
     Navigator.push(
         _context,
         new MaterialPageRoute(
@@ -65,7 +67,7 @@ class _PanelState extends State<PanelMenu>{
     Navigator.push(
         _context,
         new MaterialPageRoute(
-            builder: (context) => new ChangingUserData(widget._user)));
+            builder: (context) => new ChangingUserData(widget._user,widget.st)));
   }
 }
 

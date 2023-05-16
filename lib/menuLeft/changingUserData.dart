@@ -11,8 +11,8 @@ import '../models/user.dart';
 class ChangingUserData extends StatefulWidget {
 
   User _user;
-
-  ChangingUserData(this._user);
+  HomeState st;
+  ChangingUserData(this._user,this.st);
 
   @override
   _ChangingUserDataState createState() => new _ChangingUserDataState();
@@ -171,18 +171,10 @@ class ChangingUserData extends StatefulWidget {
       // 200 - успех 418 неправильный логин или пароль остальное чет не так с запросом
       print(response.statusCode);
       if(response.statusCode==200) {
-        //TODO крч тут обновляем данные нашего юзера на устройстве, мне он чет не дает структуру менять
-      //  _user=
-      //  _user.password=_newPass;
-        //_user.firstName=_firstName;
-       // _user.lastName=_lastName;
+       widget.st.updateUserData(widget._user.username, _newPass, _firstName, _lastName);
         setState((){
           textButtonUpdate = 'Данные изменены';
-          Timer.periodic(Duration(seconds: 8), (_) {
-            setState(() {
-              textButtonUpdate = 'Применить изменения';
-            });
-          });
+
         });
       }
     }

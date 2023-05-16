@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:project_app/models/DialogListElm.dart';
 import 'package:project_app/models/SearchedUser.dart';
-
+import 'package:project_app/home/home.dart';
 import '../models/user.dart';
 class SearchUser extends SearchDelegate {
 
-  late User _user;
-
-  SearchUser(this._user);
+   User _user;
+   HomeState st;
+  SearchUser(this._user,this.st);
 
   // Demo list to show querying
-  List<String> searchTerms = [ // TODO пользователи, которые были найдены по неполному или полному нику
-  ];
  late List<SearchedUser> matchQuery=[];
   // first overwrite to
   // clear the search text
@@ -54,7 +53,14 @@ class SearchUser extends SearchDelegate {
               body:  '{"RequestType":"CreateDialog","Login":"${_user.username}","Password": "${_user.password}","LoginRcv":"${matchQuery[index].Login}"}'
           );
           if(response.statusCode==200) {
-
+            st.getData();
+            showDialog(
+              context: context,
+              builder: (_) => AlertDialog(
+                title: Text(""),
+                content: Text('Диалог успешно создан'),
+              ),
+            );
           }
           },
           child: Text(result),),
@@ -79,7 +85,23 @@ class SearchUser extends SearchDelegate {
       itemBuilder: (context, index) {
         var result = matchQuery[index].FirstName+" "+matchQuery[index].LastName;
         return ListTile(
-          title: Text(result),
+          title: MaterialButton(onPressed: () async {
+            print("User_LOgin=${_user.username}");
+            var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
+                body:  '{"RequestType":"CreateDialog","Login":"${_user.username}","Password": "${_user.password}","LoginRcv":"${matchQuery[index].Login}"}'
+            );
+            if(response.statusCode==200) {
+              st.getData();
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Text(""),
+                  content: Text('Диалог успешно создан'),
+                ),
+              );
+            }
+          },
+            child: Text(result),),
         );
       },
     );

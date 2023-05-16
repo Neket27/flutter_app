@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project_app/models/DialogListElm.dart';
 import 'dart:convert';
 
 import '../home/home.dart';
@@ -105,6 +106,7 @@ class Input extends StatelessWidget {
   }
 
   void  performLogin() async{//TODO по смыслу ipшник где нибудь в одном месте хранить
+    _login=_login.toLowerCase();
     var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
          body:  '{"RequestType":"Autorization","Login":"${_login}","Password": "${_password}"}'
      );
@@ -116,17 +118,11 @@ class Input extends StatelessWidget {
       var response =await  http.get(Uri.parse("http://195.19.114.66:8888/?RequestData=UserInfo&Login=${_login}" ));
       Map<String, dynamic> user = jsonDecode(response.body);
       print (user['FirstName']);
-       response = await http.post(Uri.http('195.19.114.66:8888'),
-          headers: {'Accept': 'application/json'},
-          body:
-          "{\"RequestType\":\"GetDialogsList\",\"Login\":\"${_login}\",\"Password\": \"${_password}\"}");
-        final jsonResponse = json.decode(response.body);
-        print (jsonResponse['Dialogs']);
       Navigator.push(
           _context,
           new MaterialPageRoute(
               builder: (context) {
-                return Home(new User(username: _login,password: _password,firstName: user['FirstName'],lastName:user['LastName']));
+                return new Home(new User(username: _login,password: _password,firstName: user['FirstName'],lastName:user['LastName']));
               }
           ));
     }else if(response.statusCode==418){
@@ -149,6 +145,7 @@ class Input extends StatelessWidget {
   }
 
   void performReg() async{
+    _login=_login.toLowerCase();
     var response =await  http.post(Uri.http('195.19.114.66:8888', 'whatsit/create'),
         body:  '{"RequestType":"Registration","Login":"${_login}","Password": "${_password}"}'
     );
@@ -190,9 +187,11 @@ class Input extends StatelessWidget {
 
   }
 
+
   void hideKeyboard() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
   }
+
 
 }
 
